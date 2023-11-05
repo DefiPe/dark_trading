@@ -1,0 +1,18 @@
+/* .tradingView {
+    
+
+    height: 85%;
+    width: 60vw;
+    padding: 1rem;
+    background-color: red;
+   
+} */
+
+.tradingviewContainer {
+    height: 26.5rem;
+    width: 50%;
+    margin-right: 2rem;
+    padding: 0.1rem;
+    background-color: var(--gray);
+    border-radius: 10px;
+}

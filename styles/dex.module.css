@@ -1,0 +1,13 @@
+.tradeBoxContainer {
+    width: 24rem;
+    
+}
+
+.dexContent {
+    display: flex;
+    align-items: self-start;
+    justify-content: center;
+    width: 97%;
+    height: 100vh;
+    margin-left: 2rem;
+}

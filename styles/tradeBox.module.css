@@ -1,0 +1,479 @@
+/* .boxContainer {
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: black;
+    margin-right: 1rem;
+    margin-left: 2.5rem;
+  } */
+
+.tradeBox {
+  /* height: 200%; */
+  /* width: 100%;
+    height: 100%; */
+  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+  /* padding: 4%; */
+  border-radius: 5%;
+  background-color: var(--gray);
+  /* position: absolute; */
+  height: 80%;
+  /* left: 68%;
+    top: 10%; */
+
+}
+
+/* .tradeBox_success_message {
+    height: 100%;
+    width: 30rem;
+    padding: 4%;
+    border-radius: 5%;
+    display: flex;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    
+  }
+  
+  .tradeBox_success_message img {
+    height: 15rem;
+    width: 15rem;
+    margin-bottom: 2rem;
+  }
+  
+  .button-28 {
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #2770fd;
+    border-radius: 18px;
+    box-sizing: border-box;
+    color: #2770fd;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    min-height: 50px;
+    min-width: 0;
+    outline: none;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 70%;
+    will-change: transform;
+    margin-top: 1rem;
+  }
+  
+  .button-27 {
+    appearance: none;
+    background-color: #2770fd;
+    border: 2px solid #2770fd;
+    border-radius: 18px;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    min-height: 50px;
+    min-width: 0;
+    outline: none;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 70%;
+    will-change: transform;
+    margin-top: 0.5rem;
+  }
+  
+  .modal-div {
+    
+    text-align: center;
+    font-size: 1rem;
+  }
+  
+  .modal-button-div {
+    display: block;
+  } */
+
+.tradeBoxHr {
+
+  background-color: var(--border);
+
+  width: 100%;
+  height: 0.1px;
+  border: none;
+}
+
+.tradeTougle {
+  height: 1.6rem;
+  width: 1.6rem;
+  padding: 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 25%;
+  background-color: var(--dark);
+}
+
+.tradeSetting {
+  height: 1.1rem;
+  width: 1.1rem;
+  margin-left: 0.9rem;
+}
+
+
+
+/* .icon-size {
+    width: 5rem;
+    height: 5rem;
+    color: rgba(255, 255, 255, 0.466);
+  }
+
+  .icon-size:hover {
+    width: 5rem;
+    height: 5rem;
+    color: rgba(255, 255, 255, 0.979);
+    cursor: pointer;
+  } */
+
+.flexTradeBoxHr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .containtBox {
+  margin-left: 0.4rem;
+} */
+
+.tradeBox h1 {
+  font-size: 1rem;
+  font-weight: 400;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  /* margin-left: 0.4rem; */
+  /* margin: 1.6rem 0rem 0.5rem 1.2rem; */
+}
+
+.tradeBoxReloadIcon {
+  height: 1.3rem;
+  width: 1.3rem;
+  color: white;
+  margin-left: 1rem;
+}
+
+.containt-box p {
+  font-size: 0.8rem;
+  font-family: 'Inter', sans-serif;
+  color: white;
+  font-weight: 400;
+  margin: 0.6rem 0rem 0rem 0.7rem;
+}
+
+.space {
+  height: 0.8rem;
+  width: 100%;
+}
+
+.flexInput {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tradeBoxH1Flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* margin: 1.4rem 1.3rem 1.1rem 1.3rem; */
+  padding: 1.2rem 1rem 1.1rem 1rem;
+
+}
+
+.flexInput input {
+  width: 40%;
+  font-size: 1.25rem;
+  padding: 3% 5%;
+  background-color: var(--inputboccolor);
+  color: white;
+  border: 0.5px solid rgba(255, 255, 255, 0.534);
+  border-radius: 5px;
+  outline: none;
+  border-radius: 15px;
+  margin-right: 0.5rem;
+  text-align: right;
+}
+
+.tradeBoxMaxCrypto {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 1rem 1rem 0.9rem 1rem;
+  font-family: Inter;
+  font-size: 1rem;
+  /* font-weight: 600; */
+  line-height: 1.1rem;
+  letter-spacing: 0em;
+  text-align: left;
+
+}
+
+.userBalance {
+  font-size: 0.9rem;
+}
+
+/* Chrome, Safari, Edge, Opera */
+/* input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  } */
+
+/* Firefox */
+/* input[type="number"] {
+    -moz-appearance: textfield;
+  }
+   */
+/* input:focus,
+  textarea:focus {
+    border: 0.5px solid white;
+  } */
+
+.flexInputButton {
+  /* width: 25%; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0rem 0rem 0rem 1.4rem;
+}
+
+.flexInputButton p {
+  font-size: 1.2rem;
+  color: white;
+  /* margin-bottom: 0.6rem; */
+  font-weight: 500;
+  margin: 0rem 0.3rem;
+}
+
+.flexInputButton img {
+  height: 1.8rem;
+  width: 1.8rem;
+  /* margin-right: 0.5rem; */
+  /* margin-left: 1.2rem; */
+}
+
+.buttonIconBox {
+  color: white;
+  height: 1.2rem;
+  width: 0.9rem;
+  /* margin-left: 0.5rem; */
+}
+
+.button34 {
+  height: 3.4rem;
+  width: 90%;
+  background: var(--primary);
+  border-radius: 15px;
+  /* box-shadow: #2770FD 0 10px 20px -10px; */
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 18px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  /* width: fit-content; */
+  word-break: break-word;
+  border: 0;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 1.2rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.disableSwapBtn {
+  background-color: #6d5dd37b;
+}
+
+.gasBox {
+  margin: 0rem 1.6rem;
+  height: 3.5rem;
+  font-family: 'Inter', sans-serif;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gasBox p {
+  font-size: 0.6rem;
+}
+
+.flexGasPrice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* .ReactModal__Content--after-open {
+    border-radius: 25px!important;
+    
+  }
+  
+  .model-box {
+    width: 20rem;
+    
+  }
+  
+  .model-coin-list {
+    
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #1f1f41;
+    
+    padding: 1rem;
+    
+  }
+  .model-coin-list:hover {
+    
+    background-color: #7578b550;
+    width: 100%;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+  
+  
+  
+  .model-coin-list p{
+    margin-left: 1rem;
+  }
+  
+  .model-coin-list img{
+   height: 2rem;
+   width: 2rem;
+  }
+  
+  .ReactModal__Content::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  .ReactModal__Content::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.192);
+    border-radius: 10px;
+  } */
+
+
+
+.tokenModal {
+  font-size: 1.2rem;
+  width: 22rem;
+  font-weight: 400;
+  /* border-radius: 10px; */
+
+  height: 24rem;
+}
+
+
+.tokenList {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+  width: 100%;
+  /* margin: 0.5rem 1rem 1rem 1rem; */
+  margin-top: 0.5rem;
+}
+
+
+.selectedTokenModal {
+  cursor: pointer;
+  margin: 0.1rem 1rem 0.5rem 1rem;
+  /* padding: 0.5rem; */
+  /* background-color: #f0f8ff; */
+  height: 2.8rem;
+  border-radius: 10px;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  justify-content: space-between;
+
+
+}
+
+
+.tokenFlex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tokenImage {
+  height: 2rem;
+  width: 2rem;
+  margin-right: 0.5rem;
+}
+
+.tokenListHeader {
+  /* font-family: Inter; */
+font-size: 1rem;
+font-weight: 500;
+/* line-height: 22px;
+letter-spacing: 0.03em; */
+text-align: left;
+color: var(--white);
+}
+
+.tokenListSymbol {
+  /* font-family: Inter; */
+font-size: 0.8rem;
+font-weight: 400;
+/* line-height: 19px;
+letter-spacing: 0.03em; */
+text-align: left;
+color: rgba(245, 245, 245, 0.512);
+
+
+}
+
+.tokenListChain {
+  /* font-family: Inter; */
+font-size: 0.8rem;
+font-weight: 400;
+/* line-height: 1.1rem;
+letter-spacing: 0.03em; */
+text-align: left;
+color: rgba(245, 245, 245, 0.315);
+
+}
+
+@media only screen and (max-width: 700px) {
+  .tradeBox {
+    display: block;
+    justify-content: center;
+  }
+}
