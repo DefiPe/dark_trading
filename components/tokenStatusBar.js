@@ -28,7 +28,7 @@ const TokenStatusBar = () => {
         fetcher
     );
 
-    console.log("hulla ", receiveToken);
+    //console.log("hulla ", receiveToken);
     setbuyTokenFiatPrice((tokenData?.market_data?.current_price?.["usd"]));
 
 

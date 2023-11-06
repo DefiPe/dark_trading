@@ -29,12 +29,12 @@ import { publicProvider } from "wagmi/providers/public";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet, polygon],
-  [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID }), publicProvider()]
+  [alchemyProvider({ apiKey: `${process.env.NEXT_PUBLIC_ALCHEMY_ID}` }), publicProvider()]
 );
 
 const projectId = "3378220eb8273a149445af8bf0c5ed8e";
 
-export const ArcanaRainbowConnector = ({ chains }) => {
+export const ArcanaRainbowConnector = ({ chains }:any) => {
   return {
     id: "arcana-auth",
     name: "DefiPe Wallet",

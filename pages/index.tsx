@@ -2,7 +2,7 @@ import DexLayout from "@/layout/DexLayout/dexLayout";
 import { getdata } from "@/server/initialData";
 //import { getServerSideProps } from "next/dist/build/templates/pages";
 
-const Dex = (props) => {
+const Dex = (props:any) => {
 	//console.log(props?.tokenJSON?.data);
 	return (
 		<main className="gray-dark text-foreground bg-background">

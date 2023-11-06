@@ -181,7 +181,7 @@ function TradeBox({ tokendata }) {
                         <p className={styles?.tokenListSymbol}>{val?.symbol}</p>
                       </div>
                     </div>
-                    <p className={styles?.tokenListChain}>Ethereum</p>
+                    <p className={styles?.tokenListChain}>{getNetworkID()}</p>
                   </div>
                 );
               })}
@@ -217,6 +217,11 @@ function TradeBox({ tokendata }) {
     }
   }
 
+  function getNetworkID() {
+    //console.log("net ", networkNumber)
+    if (networkNumber == 137) return "polygon-pos";
+    return "ethereum";
+}
 
 
   function selectedToken(index) {
@@ -548,9 +553,9 @@ function TradeBox({ tokendata }) {
               onWheel={numberInputOnWheelPreventChange}
             />
           </div>
-          {/* <p style={{ textAlign: "right", fontSize: "0.85rem", margin: "0.7rem 0.6rem 1rem 0rem" }}>
+          <p style={{ textAlign: "right", fontSize: "0.85rem", margin: "0.7rem 0.6rem 1rem 0rem" }}>
             ~₹82,595
-          </p> */}
+          </p>
         </div>
 
 

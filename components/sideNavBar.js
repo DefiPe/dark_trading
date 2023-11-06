@@ -56,8 +56,9 @@ const SideNavBar = () => {
 
 			</div>
 			<div className={styles.navMenu}>
-				{menuItems.map(({ text, icon }) => (
+				{menuItems.map(({ text, icon, index }) => (
 					<a
+					    key={index}
 						className={isExpanded ? `${styles.menuItem}` : `${styles.menuItem} ${styles.menuItemNX}`}
 						href="#"
 					>

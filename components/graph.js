@@ -1,6 +1,7 @@
 // TradingViewWidget.jsx
 
-import styles from '@/styles/graph.module.css'
+import styles from '@/styles/graph.module.css';
+import { useNetworkStore } from "@/state/Store";
 
 // TradingViewWidget.jsx
 
@@ -9,6 +10,7 @@ import React, { useEffect, useRef } from 'react';
 let tvScriptLoadingPromise;
 
 export default function Graph() {
+  const receiveToken = useNetworkStore((state) => state.receiveToken);
   const onLoadScriptRef = useRef();
 
   useEffect(
@@ -35,7 +37,7 @@ export default function Graph() {
         if (document.getElementById('tradingview_0b758') && 'TradingView' in window) {
           new window.TradingView.widget({
             autosize: true,
-            symbol: `BTCUSDT`,
+            symbol: `${receiveToken?.symbol}USDT`,
             interval: "D",
             timezone: "Etc/UTC",
             theme: "dark",
@@ -48,7 +50,7 @@ export default function Graph() {
         }
       }
     },
-    []
+    [receiveToken?.symbol]
   );
   return (
     <div className={styles.tradingviewContainer}>
