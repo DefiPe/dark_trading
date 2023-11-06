@@ -42,7 +42,7 @@ function TradeBox({ tokendata }) {
   const [sellTokenAmount, setSellTokenAmount] = useState(null); //Sell token amount
   const [tokenData, setTokenData] = useState(tokendata);
 
-  const [estimatedGas, setEstimatedGas] = useState(1);
+  const [estimatedGas, setEstimatedGas] = useState(null);
   const [toggleToken, setToggleToken] = useState(); // Distinguish between buy and sell Model
 
   const [selectBuyToken, setSelectBuyToken] = useState(tokenData?.[0]); // Buy Token Id
@@ -53,6 +53,8 @@ function TradeBox({ tokendata }) {
   const setSellToken = useNetworkStore((state) => state.setsellToken);
   const networkNumber = useNetworkStore((state) => state.networkId); // Hook of State Store of Network Id
   const setNetworkNumber = useNetworkStore((state) => state.setNetworkId); // Hook of State Store of Set Network Id
+
+  const buytokenFiatPrice = useNetworkStore((state) => state.buyTokenFiatPrice);
 
   const [swapBtnMessage, setSwapBtnMessage] = useState("Swap Now"); // Message on button
   const [disableSwapBtn, setDisableSwapBtn] = useState(false); // Flag for Token Swap Button
@@ -70,7 +72,7 @@ function TradeBox({ tokendata }) {
       : null,
     fetcher
   );
-  console.log("Price ", priceJson);
+  //console.log("Price ", priceJson);
   const { data: walletClient } = useWalletClient(); // Hook of Wallet public Data
   const { isConnected } = useAccount(); // Hook of Address is Connected of not
   const { openConnectModal } = useConnectModal(); // Hook of Wallet Connect by RainbowKit
@@ -79,7 +81,9 @@ function TradeBox({ tokendata }) {
 
 
 
-
+  useEffect(() => {
+    setReceiveToken(tokenData?.[0]);
+  }, [tokenData])
 
   useEffect(() => {
     //console.log(chain?.id, "hhhhf", networkNumber);
@@ -219,12 +223,12 @@ function TradeBox({ tokendata }) {
     if (toggleToken === false) {
 
       setSelectSellToken(tokenData?.[index]);
-      setReceiveToken(tokenData?.[index]);
+      setSellToken(toggleToken?.[index]);
 
     } else if (toggleToken === true) {
       setSelectBuyToken(tokenData?.[index]);
-      setSellToken(toggleToken?.[index]);
-      //console.log(tokenData?.[index]);
+
+      setReceiveToken(tokenData?.[index]);
     }
     setBuyTokenAmount(0);
     setSellTokenAmount(0);
@@ -417,6 +421,7 @@ function TradeBox({ tokendata }) {
         render: "Transaction is successful",
         type: "success",
         isLoading: false,
+        theme: "dark",
       });
       if (receipt?.status == "success") {
         setSwapBtnMessage(`Swap Now`);
@@ -466,6 +471,7 @@ function TradeBox({ tokendata }) {
         render: "Transaction is successful",
         type: "success",
         isLoading: false,
+        theme: "dark",
       });
       setSellTokenAmount(0);
 
@@ -480,9 +486,9 @@ function TradeBox({ tokendata }) {
     <>
       <div className={styles.tradeBox}>
         <div className={styles.tradeBoxH1Flex}>
-          <h1>Swap</h1>
+          <h3>Swap</h3>
           <div>
-            <Image src="reload-icon.svg" alt="" height={100} width={100} className={styles.tradeSetting} />
+            {/* <Image src="reload-icon.svg" alt="" height={100} width={100} className={styles.tradeSetting} /> */}
             <Image src="trading-setting.svg" alt="" height={100} width={100} className={styles.tradeSetting} />
           </div>
         </div>
@@ -493,7 +499,7 @@ function TradeBox({ tokendata }) {
         <div className={styles.containtBox}>
           <div className={styles.tradeBoxMaxCrypto}>
             <p>You pay</p>
-            <p className={styles.userBalance}>Max 49,678.56 USDT</p>
+            {/* <p className={styles.userBalance}>Max 49,678.56 USDT</p> */}
           </div>
           <div className={styles.space}></div>
           <div className={styles.flexInput}>
@@ -542,9 +548,9 @@ function TradeBox({ tokendata }) {
               onWheel={numberInputOnWheelPreventChange}
             />
           </div>
-          <p style={{ textAlign: "right", fontSize: "0.85rem", margin: "0.7rem 0.6rem 1rem 0rem" }}>
+          {/* <p style={{ textAlign: "right", fontSize: "0.85rem", margin: "0.7rem 0.6rem 1rem 0rem" }}>
             ~₹82,595
-          </p>
+          </p> */}
         </div>
 
 
@@ -609,7 +615,7 @@ function TradeBox({ tokendata }) {
               value={
                 priceJson?.buyAmount
                   ? formatUnits(
-                    priceJson?.buyAmount,
+                    priceJson?.buyAmount?.toString(),
                     selectBuyToken?.decimals
                   )
                   : "" || ""
@@ -618,9 +624,11 @@ function TradeBox({ tokendata }) {
               onWheel={numberInputOnWheelPreventChange}
             />
           </div>
-          <p style={{ textAlign: "right", fontSize: "0.85rem", margin: "0.7rem 0.6rem 1rem 0rem" }}>
-            ~₹93,784
-          </p>
+         {
+          (priceJson?.buyAmount)?  ( selectBuyToken?.decimals && buytokenFiatPrice)? <p style={{ textAlign: "right", fontSize: "0.85rem", margin: "0.7rem 0.6rem 1rem 0rem" }}> {((formatUnits(priceJson?.buyAmount,selectBuyToken?.decimals))*buytokenFiatPrice)?.toFixed(2)}USD</p>:<div style={{display:"flex", justifyContent:"flex-end", marginTop:"1rem", marginRight:"0.6rem"}}><Skeleton className="h-3 w-1/5 rounded-lg" /></div>:<></>
+         }
+          
+           
         </div>
 
 
@@ -672,7 +680,7 @@ function TradeBox({ tokendata }) {
             </button>
           </>
         )}
-        {/* </div> */}
+
 
 
         <div className={styles.gasBox}>
@@ -702,17 +710,12 @@ function TradeBox({ tokendata }) {
                 {
                   (isLoading == true) ?
 
-                    <div className="w-full flex flex-col gap-2">
-                      <Skeleton className="h-3 w-3/5 rounded-lg" />
-
-                    </div> :
+                    <Skeleton isLoaded={false} className="w-4/5 rounded-lg">
+                      <div className="h-3 w-full rounded-lg bg-secondary-300"></div>
+                    </Skeleton> :
                     <p>{`1 ${selectSellToken?.symbol} = ${priceJson?.price} ${selectBuyToken?.symbol}`} </p>
                 }
-                {/* <p>{`1 ${selectSellToken?.symbol} = ${priceJson?.price} ${selectBuyToken?.symbol}`} </p>
-                <div className="w-full flex flex-col gap-2">
-                  <Skeleton className="h-3 w-3/5 rounded-lg" />
-                  <Skeleton className="h-3 w-4/5 rounded-lg" />
-                </div> */}
+
               </div>
               <div className={styles.flexGasPrice}>
 
@@ -741,9 +744,7 @@ function TradeBox({ tokendata }) {
                   />
                 </svg>
 
-                <p> {formatUnits(
-                  priceJson?.gasPrice, 9
-                )} Gwei</p>
+                <p> {parseFloat((formatUnits(priceJson?.gasPrice, 9)))?.toFixed(2)} Gwei</p>
               </div>
             </>
           )}
@@ -766,7 +767,7 @@ function TradeBox({ tokendata }) {
 
 
 
-      <ToastContainer />
+      <ToastContainer theme="dark"/>
 
     </>
   )

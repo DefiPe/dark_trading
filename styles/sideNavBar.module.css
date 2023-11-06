@@ -164,3 +164,10 @@
 .logoutIcon:hover {
 	background-color: var(--primary);
 }
+
+
+@media (max-width: 1000px) {
+	.sidenavContainer {
+		display: none;
+	}
+}

@@ -5,11 +5,14 @@ import { getdata } from "@/server/initialData";
 const Dex = (props) => {
 	//console.log(props?.tokenJSON?.data);
 	return (
-		<DexLayout tokenData={props?.tokenJSON?.data}/>
+		<main className="gray-dark text-foreground bg-background">
+			<DexLayout tokenData={props?.tokenJSON?.data}/>
+		</main>
+		
 	);
 };
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
 	//let tokenAPI = await fetch(`https://api.defipe.io/pagination/1?page=1&limit=10`);
 	let tokenJSON = await getdata();
 	return {

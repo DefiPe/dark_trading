@@ -18,7 +18,7 @@
   border-radius: 5%;
   background-color: var(--gray);
   /* position: absolute; */
-  height: 80%;
+  height: auto;
   /* left: 68%;
     top: 10%; */
 
@@ -252,12 +252,15 @@
     border: 0.5px solid white;
   } */
 
+  
+
 .flexInputButton {
   /* width: 25%; */
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0rem 0rem 0rem 1.4rem;
+  cursor: pointer;
 }
 
 .flexInputButton p {
@@ -475,5 +478,6 @@ color: rgba(245, 245, 245, 0.315);
   .tradeBox {
     display: block;
     justify-content: center;
+    height: auto;
   }
 }

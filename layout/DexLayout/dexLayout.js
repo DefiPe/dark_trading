@@ -5,16 +5,12 @@ import MainLayout from "../MainLayout/mainLayout";
 import TokenStatusBar from "@/components/tokenStatusBar";
 import TopNavbar from "../TopLayout/topNavbar";
 import React from "react";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 
 const DexLayout = ({ tokenData }) => {
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
   return (
     <>
       <MainLayout >
-        {/* <TopNavbar /> */}
-
-        <div style={{ paddingTop: "2.5rem" }}>
+        <div className={styles.dexLayout}>
           <TokenStatusBar />
           <div className={styles.dexContent}>
             {/* <TokenStatusBar/> */}
@@ -22,11 +18,9 @@ const DexLayout = ({ tokenData }) => {
             <div className={styles.tradeBoxContainer}>
               <TradeBox tokendata={tokenData} />
             </div>
-
-
           </div>
         </div>
-        
+
       </MainLayout >
 
 

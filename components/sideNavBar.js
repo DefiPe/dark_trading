@@ -42,7 +42,7 @@ const SideNavBar = () => {
 						className={
 							isExpanded ? `${styles.hamburger} ${styles.hamburgerIN}` : `${styles.hamburger} ${styles.hamburgerOUT}`
 						}
-						onClick={() => setExpendState(!isExpanded)}
+						// onClick={() => setExpendState(!isExpanded)}
 					>
 						<img src="white-logo.svg" alt="" srcSet="" />
 					</button>
