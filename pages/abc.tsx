@@ -14,6 +14,7 @@ export default function Home() {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       {/* <link rel="icon" href="/Defipe_nav.ico" /> */}
     </Head>
+    {console.log("hello")}
       <Button onPress={onOpen}>Open Modal</Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
