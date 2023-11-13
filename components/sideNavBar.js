@@ -1,25 +1,26 @@
 // import Head from "next/head";
 import styles from '@/styles/sideNavBar.module.css';
-import { Home2, Setting,ArrangeVerticalSquare,Diagram } from 'iconsax-react';
+import { Tooltip } from '@nextui-org/react';
+import { Home2, Setting, ArrangeVerticalSquare, Diagram } from 'iconsax-react';
 
 
 const SideNavBar = () => {
 	const menuItems = [
 		{
-			text: "Dashboard",
+			text: "Dashboard(comming soon)",
 			icon: <Home2 className={styles.menuItemIcon} size="32" color="#666666" variant="Outline" />,
 		},
 		{
-			text:  "trade",
-			icon: <ArrangeVerticalSquare size="32" color="#FFFFFF" variant="Bold"/>,
+			text: "trade",
+			icon: <ArrangeVerticalSquare size="32" color="#FFFFFF" variant="Bold" />,
 		},
 		{
-			text:"market",
-			icon: <Diagram size="32" color="#666666" variant="Outline"/>,
+			text: "market(comming soon)",
+			icon: <Diagram size="32" color="#666666" variant="Outline" />,
 		},
 		{
-			text: "settings",
-			icon: <Setting size="32" color="#666666" variant="Outline"/>,
+			text: "settings(comming soon)",
+			icon: <Setting size="32" color="#666666" variant="Outline" />,
 		},
 	];
 	return (
@@ -37,14 +38,22 @@ const SideNavBar = () => {
 			</div>
 			<div className={styles.navMenu}>
 				{menuItems.map(({ text, icon, index }) => (
+
 					<a
 						key={index}
 						className={styles.menuItem}
 						href="#"
+					><Tooltip
+						key={text}
+						placement="foreground"
+						content={text}
+						color="foreground"
 					>
-						{icon}
+							{icon}
+						</Tooltip>
 
 					</a>
+
 				))}
 			</div>
 

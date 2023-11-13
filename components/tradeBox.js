@@ -391,7 +391,6 @@ function TradeBox({ tokendata }) {
   }
 
   async function approveFunction(approveAddress, approveAmount) {
-    console.log("approve function");
     try {
       // const publicClient = createPublicClient({
       //   chain: polygon,
@@ -446,7 +445,6 @@ function TradeBox({ tokendata }) {
   async function tradeNow() {
     try {
       let priceData = await getSwap();
-      console.log("trade now");
       // const client = createWalletClient({
       //   account: walletClient?.account.address,
       //   chain: polygon,
@@ -462,9 +460,9 @@ function TradeBox({ tokendata }) {
         value: priceData?.value,
         gasPrice: priceData?.gasPrice,
       };
-      console.log("jdhhd", privateClient)
+    
       let hashKey = await privateClient?.sendTransaction(txParams);
-      console.log("hash ", hashKey);
+  
       const id = toast.loading("Please wait...");
 
       //console.log("hashkey ", hashKey);
