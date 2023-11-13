@@ -16,5 +16,8 @@ export const useNetworkStore = create((set, get) => ({
   buyTokenFiatPrice: null,
   setBuyTokenFiatPrice: (_val) => set(() => ({buyTokenFiatPrice: _val})),
 
+  sellTokenFiatPrice: null,
+  setSellTokenFiatPrice: (_val) => set(() => ({sellTokenFiatPrice: _val})),
+
 
 }));

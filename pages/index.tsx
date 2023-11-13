@@ -16,6 +16,7 @@ const Dex = (props: any) => {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				{/* <link rel="icon" href="/Defipe_nav.ico" /> */}
 			</Head>
+			
 			<main className="gray-dark text-foreground bg-background">
 				<DexLayout tokenData={props?.tokenJSON?.data} />
 			</main>
@@ -28,6 +29,7 @@ const Dex = (props: any) => {
 export async function getServerSideProps() {
 	//let tokenAPI = await fetch(`https://api.defipe.io/pagination/1?page=1&limit=10`);
 	let tokenJSON = await getdata();
+	//console.log("tokenJSON ", tokenJSON)
 	return {
 		props: { tokenJSON }
 	}

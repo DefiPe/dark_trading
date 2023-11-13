@@ -4,6 +4,8 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 import menuImg from "@/public/hamburger_menu.svg";
+import { Input } from "@nextui-org/react";
+//import {SearchIcon} from "./SearchIcon";
 
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
 
@@ -32,16 +34,6 @@ const TopNavbar = () => {
     "Help & Feedback",
   ];
 
-  const menuLink = [
-    "/",
-    "#",
-    "#",
-    "#",
-    "#",
-    "#",
-    "#",
-  ];
-
 
 
   return (
@@ -49,14 +41,21 @@ const TopNavbar = () => {
       {
         (isFlag) ? <>
           <div className={styles.topNavBar}>
-            <form className={styles.search}>
+            {/* <form className={styles.search}>
               <input
                 className={styles.xyz}
                 type="text"
                 placeholder="search token name or address..."
               />
 
-            </form>
+            </form> */}
+
+            <div className={styles.search}>
+
+            </div>
+ {/* <div className={styles.search}>
+      <Input type="email" label="Email" />
+     </div> */}
 
 
 
@@ -180,7 +179,7 @@ const TopNavbar = () => {
                     href={index == 0 ? "/" : "#"}
                     size="lg"
 
-                    style={index == 0 ? { color: "White",cursor:"pointer" } : { color: "#ffffff78", cursor:"not-allowed" }}
+                    style={index == 0 ? { color: "White", cursor: "pointer" } : { color: "#ffffff78", cursor: "not-allowed" }}
                   >
                     {item}
                   </Link>

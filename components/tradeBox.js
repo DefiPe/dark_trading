@@ -55,6 +55,7 @@ function TradeBox({ tokendata }) {
   const setNetworkNumber = useNetworkStore((state) => state.setNetworkId); // Hook of State Store of Set Network Id
 
   const buytokenFiatPrice = useNetworkStore((state) => state.buyTokenFiatPrice);
+  const selltokenFiatPrice = useNetworkStore((state) => state.sellTokenFiatPrice);
 
   const [swapBtnMessage, setSwapBtnMessage] = useState("Swap Now"); // Message on button
   const [disableSwapBtn, setDisableSwapBtn] = useState(false); // Flag for Token Swap Button
@@ -228,12 +229,14 @@ function TradeBox({ tokendata }) {
     if (toggleToken === false) {
 
       setSelectSellToken(tokenData?.[index]);
-      setSellToken(toggleToken?.[index]);
+      setSellToken(tokenData?.[index]);
+      
 
     } else if (toggleToken === true) {
       setSelectBuyToken(tokenData?.[index]);
 
       setReceiveToken(tokenData?.[index]);
+      
     }
     setBuyTokenAmount(0);
     setSellTokenAmount(0);
@@ -553,9 +556,9 @@ function TradeBox({ tokendata }) {
               onWheel={numberInputOnWheelPreventChange}
             />
           </div>
-          <p style={{ textAlign: "right", fontSize: "0.85rem", margin: "0.7rem 0.6rem 1rem 0rem" }}>
-            ~₹82,595
-          </p>
+          {
+          (priceJson?.buyAmount)?  ( selectBuyToken?.decimals && buytokenFiatPrice)? <p className={styles.fiatPrice}> {((formatUnits(priceJson?.buyAmount,selectBuyToken?.decimals))*buytokenFiatPrice)?.toFixed(2)}USD</p>:<div style={{display:"flex", justifyContent:"flex-end", marginTop:"1rem", marginRight:"0.6rem"}}><Skeleton className="h-3 w-1/5 rounded-lg" /></div>:<span style={{height:"0.8rem", width:"1rem", margin: "0.7rem 0.6rem 1rem 0rem"}}></span>
+         }
         </div>
 
 
@@ -630,7 +633,7 @@ function TradeBox({ tokendata }) {
             />
           </div>
          {
-          (priceJson?.buyAmount)?  ( selectBuyToken?.decimals && buytokenFiatPrice)? <p style={{ textAlign: "right", fontSize: "0.85rem", margin: "0.7rem 0.6rem 1rem 0rem" }}> {((formatUnits(priceJson?.buyAmount,selectBuyToken?.decimals))*buytokenFiatPrice)?.toFixed(2)}USD</p>:<div style={{display:"flex", justifyContent:"flex-end", marginTop:"1rem", marginRight:"0.6rem"}}><Skeleton className="h-3 w-1/5 rounded-lg" /></div>:<></>
+          (priceJson?.buyAmount)?  ( selectBuyToken?.decimals && buytokenFiatPrice)? <p className={styles.fiatPrice}> {((formatUnits(priceJson?.buyAmount,selectBuyToken?.decimals))*buytokenFiatPrice)?.toFixed(2)}USD</p>:<div style={{display:"flex", justifyContent:"flex-end", marginTop:"1rem", marginRight:"0.6rem"}}><Skeleton className="h-3 w-1/5 rounded-lg" /></div>:<></>
          }
           
            

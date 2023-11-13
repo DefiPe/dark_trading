@@ -11,55 +11,55 @@
 .tokenStatusMain {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 14rem;
-    height: 4.7rem;
 
-
-
-    padding: 0.5rem;
-    margin: 1rem 0rem;
+    padding: 2.15rem 2.2rem;
+    width: 15.65rem;
     background-color: var(--gray);
     color: var(--white);
     border-radius: 10px 0px 0px 10px;
 }
 
 .tokenStatusMain img {
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 2.7rem;
+    width: 2.7rem;
     border-radius: 50%;
-    margin-right: 0.5rem;
+    margin-right: 0.8rem;
 }
 
 .tokenStatusMain h1 {
-    /* font-family: Poppins; */
-    font-size: 1.1rem;
+
+    font-family: Poppins;
+    font-size: 1rem;
     font-weight: 600;
     line-height: 1.3rem;
     letter-spacing: 0em;
+    text-align: left;
+
 
 }
 
 .tokenStatusMain p {
-    
-font-size: 12px;
-font-weight: 600;
-line-height: 20px;
-letter-spacing: 0em;
-text-align: left;
-color:#7F7C83;
+
+
+    color: #7F7C83;
+
+    font-family: Poppins;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.3rem;
+    letter-spacing: 0em;
+    text-align: left;
+
 
 
 }
 
 .tokenStatusDiv {
-    width: 14rem;
-    height: 4.7rem;
-    /* padding: 0.5rem 0.5rem 0.5rem 2rem; */
+    padding: 2.15rem 2.2rem;
+    width: 15.65rem;
     display: flex;
     align-items: center;
-    justify-content: center;
-    /* margin: 1rem 0rem; */
+
     background-color: var(--gray);
     color: var(--white);
     border-left: 1px solid var(--border);
@@ -67,44 +67,54 @@ color:#7F7C83;
 }
 
 .tokenStatusDiv h2 {
-    font-size: 1.1rem;
+    font-family: Poppins;
+    font-size: 1rem;
     font-weight: 600;
-    line-height: 1.3rem;
+    line-height: 1.4rem;
     letter-spacing: 0em;
     text-align: left;
+
 
 }
 
 
 .tokenStatusDiv p {
-
-    
-    font-size: 12px;
+    font-family: Poppins;
+    font-size: 0.9rem;
     font-weight: 600;
-    line-height: 20px;
+    line-height: 1.4rem;
     letter-spacing: 0em;
     text-align: left;
     color: #7F7C83;
+
 }
+
+
 
 .tokenStatusBorder {
     border-radius: 0px 10px 10px 0px;
-    
+
+}
+
+.tokenDivThree {
+    border-radius: 0px 15px 15px 0px;
 }
 
 
 @media (max-width: 1000px) {
 
     .tokenStatusContainer {
-    width: 94%;
-    margin: auto;
+        width: 94%;
+        margin: auto;
     }
 
     .tokenStatusDiv {
         border-top-right-radius: 10px;
     }
-    .tokenDivOne, .tokenDivTwo, .tokenDivThree {
+
+    .tokenDivOne,
+    .tokenDivTwo,
+    .tokenDivThree {
         display: none;
     }
 }
-

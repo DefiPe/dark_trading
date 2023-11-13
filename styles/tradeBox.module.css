@@ -119,12 +119,18 @@
 }
 
 .tradeTougle {
-  height: 1.6rem;
-  width: 1.6rem;
+ 
   padding: 0.4rem;
   border: 1px solid var(--border);
-  border-radius: 25%;
+ 
   background-color: var(--dark);
+
+
+  width: 2rem;
+height: 2rem;
+border-radius: 10px;
+cursor: pointer;
+
 }
 
 .tradeSetting {
@@ -191,6 +197,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0px 0.7rem;
 }
 
 .tradeBoxH1Flex {
@@ -198,13 +205,20 @@
   align-items: center;
   justify-content: space-between;
   /* margin: 1.4rem 1.3rem 1.1rem 1.3rem; */
-  padding: 1.2rem 1rem 1.1rem 1rem;
+  padding: 1rem 1.2rem 0.9rem 1.2rem;
+
+  font-family: Poppins;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  letter-spacing: 0em;
+  text-align: left;
+
 
 }
 
 .flexInput input {
   width: 40%;
-  font-size: 1.25rem;
   padding: 3% 5%;
   background-color: var(--inputboccolor);
   color: white;
@@ -213,7 +227,26 @@
   outline: none;
   border-radius: 15px;
   margin-right: 0.5rem;
+
+
+
+  font-family: Inter;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.4rem;
+  letter-spacing: 0em;
   text-align: right;
+
+}
+
+.fiatPrice {
+  font-family: Poppins;
+font-size: 0.8rem;
+font-weight: 600;
+line-height: 1.1rem;
+letter-spacing: 0em;
+text-align: right;
+margin: 0.7rem 1.3rem 1rem 0rem;
 }
 
 .tradeBoxMaxCrypto {
@@ -221,13 +254,14 @@
   justify-content: space-between;
   align-items: center;
 
-  margin: 1rem 1rem 0.9rem 1rem;
+  margin: 1rem 1rem 0.9rem 1.2rem;
   font-family: Inter;
   font-size: 1rem;
   /* font-weight: 600; */
-  line-height: 1.1rem;
+  line-height: 0.8rem;
   letter-spacing: 0em;
   text-align: left;
+
 
 }
 
@@ -252,29 +286,34 @@
     border: 0.5px solid white;
   } */
 
-  
+
 
 .flexInputButton {
   /* width: 25%; */
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0rem 0rem 0rem 1.4rem;
+  margin: 0rem 0rem 0rem 1rem;
   cursor: pointer;
 }
 
 .flexInputButton p {
-  font-size: 1.2rem;
-  color: white;
-  /* margin-bottom: 0.6rem; */
-  font-weight: 500;
+
   margin: 0rem 0.3rem;
+
+  font-family: Inter;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.3rem;
+  letter-spacing: 0em;
+  text-align: left;
+  color: white;
 }
 
 .flexInputButton img {
-  height: 1.8rem;
-  width: 1.8rem;
-  /* margin-right: 0.5rem; */
+  height: 2.2rem;
+  width: 2.2rem;
+  margin-right: 0.5rem;
   /* margin-left: 1.2rem; */
 }
 
@@ -443,34 +482,34 @@
 
 .tokenListHeader {
   /* font-family: Inter; */
-font-size: 1rem;
-font-weight: 500;
-/* line-height: 22px;
+  font-size: 1rem;
+  font-weight: 500;
+  /* line-height: 22px;
 letter-spacing: 0.03em; */
-text-align: left;
-color: var(--white);
+  text-align: left;
+  color: var(--white);
 }
 
 .tokenListSymbol {
   /* font-family: Inter; */
-font-size: 0.8rem;
-font-weight: 400;
-/* line-height: 19px;
+  font-size: 0.8rem;
+  font-weight: 400;
+  /* line-height: 19px;
 letter-spacing: 0.03em; */
-text-align: left;
-color: rgba(245, 245, 245, 0.512);
+  text-align: left;
+  color: rgba(245, 245, 245, 0.512);
 
 
 }
 
 .tokenListChain {
   /* font-family: Inter; */
-font-size: 0.8rem;
-font-weight: 400;
-/* line-height: 1.1rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  /* line-height: 1.1rem;
 letter-spacing: 0.03em; */
-text-align: left;
-color: rgba(245, 245, 245, 0.315);
+  text-align: left;
+  color: rgba(245, 245, 245, 0.315);
 
 }
 

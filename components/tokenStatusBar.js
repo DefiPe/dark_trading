@@ -13,8 +13,10 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 const TokenStatusBar = () => {
 
     const networkNumber = useNetworkStore((state) => state.networkId);
+    const sellToken = useNetworkStore((state) => state.sellToken);
     const receiveToken = useNetworkStore((state) => state.receiveToken);
     const setbuyTokenFiatPrice = useNetworkStore((state) => state.setBuyTokenFiatPrice);
+    const setSellTokenFiatPrice = useNetworkStore((state) => state.setSellTokenFiatPrice);
 
 
     function getNetwork() {
@@ -22,13 +24,21 @@ const TokenStatusBar = () => {
         return "ethereum";
     }
 
+    const { data: sellTokenData } = useSWR(
+        (receiveToken) ?
+            `https://api.coingecko.com/api/v3/coins/${getNetwork()}/contract/${sellToken?.address}?localization=false&community_data=false&developer_data=false&tickers=false` : null,
+        fetcher
+    );
+
+    sellTokenData && setSellTokenFiatPrice((sellTokenData?.market_data?.current_price?.["usd"]));
+
+
     const { data: tokenData } = useSWR(
         (receiveToken) ?
             `https://api.coingecko.com/api/v3/coins/${getNetwork()}/contract/${receiveToken?.address}?localization=false&community_data=false&developer_data=false&tickers=false` : null,
         fetcher
     );
 
-    //console.log("hulla ", receiveToken);
     setbuyTokenFiatPrice((tokenData?.market_data?.current_price?.["usd"]));
 
 
@@ -57,7 +67,7 @@ const TokenStatusBar = () => {
                     <p>24h Change</p>
                     {
                         (tokenData?.market_data?.price_change_percentage_24h) ?
-                            (tokenData?.market_data?.price_change_percentage_24h >= 0) ? <span style={{ color: "#00b96d" }}>{(tokenData?.market_data?.price_change_percentage_24h)}%</span> : <span style={{ color: "#ff666e" }}>{(tokenData?.market_data?.price_change_percentage_24h)}%</span>
+                            (tokenData?.market_data?.price_change_percentage_24h >= 0) ? <span style={{ color: "#00b96d", fontWeight:"600" }}>{(tokenData?.market_data?.price_change_percentage_24h)}%</span> : <span style={{ color: "#ff666e" }}>{(tokenData?.market_data?.price_change_percentage_24h)}%</span>
                             :
                             <Skeleton className="h-3 w-4/5 rounded-lg" />
                     }

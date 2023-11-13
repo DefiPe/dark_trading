@@ -1,35 +1,40 @@
 .dexLayout {
-    padding-top: 2.5rem;
+    padding-top: 1rem;
+    padding-left: 6rem;
 }
+
 .tradeBoxContainer {
-    width: 24rem;   
+    width: 24rem;
 }
 
 .dexContent {
     display: flex;
     align-items: self-start;
     justify-content: center;
-    width: 97%;
+    width: 100%;
     height: 100vh;
-    margin-left: 2rem;
+    margin-top: 1rem;
 }
 
 
 @media (max-width: 1000px) {
     .dexLayout {
         padding-top: 0.9rem;
+        padding-left: 0px;
     }
+
     .tradeBoxContainer {
         width: 24rem;
         height: 100%;
     }
-.dexContent {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%; 
-    height: 100vh;
-    margin-left: 0px;
-}
+
+    .dexContent {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100vh;
+        margin-left: 0px;
+    }
 }
