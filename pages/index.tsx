@@ -14,9 +14,9 @@ const Dex = (props: any) => {
 					content="Easy-to-use Crypto Trading Platform"
 				/>
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
-				{/* <link rel="icon" href="/Defipe_nav.ico" /> */}
+				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			
+
 			<main className="gray-dark text-foreground bg-background">
 				<DexLayout tokenData={props?.tokenJSON?.data} />
 			</main>
