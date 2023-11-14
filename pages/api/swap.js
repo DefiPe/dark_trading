@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   }
 
   //const query = qs.stringify(req.query);
-  console.log("Server req ", `https://${mainUrl}/swap/v1/quote?buyToken=${val.buyToken}&sellToken=${val.sellToken}&sellAmount=${val.sellAmount}&takerAddress=${val.takerAddress}&&feeRecipient=0xa22557dd15d137b6A9Bc485a715e37AC30d38100&buyTokenPercentageFee=0.05&enableSlippageProtection=true&priceImpactProtectionPercentage=0.15&intentOnFilling=true&skipValidation=true`);
+  //console.log("Server req ", `https://${mainUrl}/swap/v1/quote?buyToken=${val.buyToken}&sellToken=${val.sellToken}&sellAmount=${val.sellAmount}&takerAddress=${val.takerAddress}&&feeRecipient=0xa22557dd15d137b6A9Bc485a715e37AC30d38100&buyTokenPercentageFee=0.05&enableSlippageProtection=true&priceImpactProtectionPercentage=0.15&intentOnFilling=true&skipValidation=true`);
   const response = await fetch(
     `https://${mainUrl}/swap/v1/quote?buyToken=${val.buyToken}&sellToken=${val.sellToken}&sellAmount=${val.sellAmount}&takerAddress=${val.takerAddress}&&feeRecipient=0xa22557dd15d137b6A9Bc485a715e37AC30d38100&buyTokenPercentageFee=0.05&enableSlippageProtection=true&priceImpactProtectionPercentage=0.15&intentOnFilling=true&skipValidation=true`,
     {
@@ -24,6 +24,6 @@ export default async function handler(req, res) {
 
    
   const data = await response.json();
-  console.log("Server Response ", data);
+  //console.log("Server Response ", data);
   res.status(200).json(data);
 }

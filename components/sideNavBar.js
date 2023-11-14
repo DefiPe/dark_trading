@@ -31,7 +31,7 @@ const SideNavBar = () => {
 		>
 			<div className={styles.navUpper}>
 				<div className={styles.navHeading}>
-					<img src="white-logo.svg" alt="" srcSet="" />
+					<img src="white-logo.svg" alt="defi logo" srcSet="" />
 
 				</div>
 

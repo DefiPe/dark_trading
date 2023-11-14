@@ -3,7 +3,7 @@ import Graph from "@/components/graph";
 import TradeBox from "@/components/tradeBox";
 import MainLayout from "../MainLayout/mainLayout";
 import TokenStatusBar from "@/components/tokenStatusBar";
-import TopNavbar from "../TopLayout/topNavbar";
+//import TopNavbar from "../TopLayout/topNavbar";
 import React from "react";
 
 const DexLayout = ({ tokenData }) => {

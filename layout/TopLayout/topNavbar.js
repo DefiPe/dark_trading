@@ -3,8 +3,8 @@ import styles from '@/styles/topNavbar.module.css';
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
-import menuImg from "@/public/hamburger_menu.svg";
-import { Input } from "@nextui-org/react";
+// import menuImg from "@/public/hamburger_menu.svg";
+// import { Input } from "@nextui-org/react";
 //import {SearchIcon} from "./SearchIcon";
 
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
