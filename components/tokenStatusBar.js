@@ -67,7 +67,7 @@ const TokenStatusBar = () => {
                     <p>24h Change</p>
                     {
                         (tokenData?.market_data?.price_change_percentage_24h) ?
-                            (tokenData?.market_data?.price_change_percentage_24h >= 0) ? <span style={{ color: "#00b96d", fontWeight:"600" }}>{(tokenData?.market_data?.price_change_percentage_24h)}%</span> : <span style={{ color: "#ff666e" }}>{(tokenData?.market_data?.price_change_percentage_24h)}%</span>
+                            (tokenData?.market_data?.price_change_percentage_24h >= 0) ? <span style={{ color: "#00b96d", fontWeight:"700" }}>{(tokenData?.market_data?.price_change_percentage_24h)}%</span> : <span style={{ color: "#ff666e" }}>{(tokenData?.market_data?.price_change_percentage_24h)}%</span>
                             :
                             <Skeleton className="h-3 w-4/5 rounded-lg" />
                     }

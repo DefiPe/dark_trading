@@ -100,6 +100,20 @@
     border-radius: 0px 15px 15px 0px;
 }
 
+@media (max-width: 1380px) {
+    .tokenDivThree {
+        display: none;
+    }
+}
+
+@media (max-width: 1000px) {
+    .tokenDivTwo {
+        display: none;
+    }
+}
+
+
+
 
 @media (max-width: 1000px) {
 
@@ -112,9 +126,19 @@
         border-top-right-radius: 10px;
     }
 
-    .tokenDivOne,
+    /* .tokenDivOne,
     .tokenDivTwo,
     .tokenDivThree {
+        display: none;
+    } */
+}
+
+
+@media (max-width: 700px) {
+
+
+
+    .tokenDivOne {
         display: none;
     }
 }

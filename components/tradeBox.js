@@ -12,7 +12,7 @@ import { erc20ABI, getNetwork } from "@wagmi/core";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import publicClientViem from "@/utils/client";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Skeleton } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Skeleton, Divider } from "@nextui-org/react";
 
 
 // const customStyles = {
@@ -40,7 +40,7 @@ function TradeBox({ tokendata }) {
   const [buyAmount, setBuyAmount] = useState(); //Buy token amount
   const [buyTokenAmount, setBuyTokenAmount] = useState(); //Buy token amount
   const [sellTokenAmount, setSellTokenAmount] = useState(null); //Sell token amount
-  const [tokenData, setTokenData] = useState(tokendata);
+  const [tokenData, setTokenData] = useState(null);
 
   const [estimatedGas, setEstimatedGas] = useState(null);
   const [toggleToken, setToggleToken] = useState(); // Distinguish between buy and sell Model
@@ -132,85 +132,91 @@ function TradeBox({ tokendata }) {
     try {
       return (
         <div className={styles?.tokenModal}>
-          {/* <div className={styles?.tokenModalInput}>
-            <MagnifyingGlassIcon height="24" width="24" />
+          <div className={styles?.tokenModalInput}>
             <input
-              placeholder="Search token name or address…"
-              style={{ fontSize: "1rem" }}
+              placeholder="Search Token or paste address"
               onChange={(event) => getSearchToken(event?.target?.value)}
             />
-           
-
-       
-          </div> */}
-          {tokenData?.length !== 0 ? (
-            <div className={styles?.tokenList}>
 
 
-              {tokenData?.map((val, i) => {
-                return (
-                  <div
-                    key={i}
-                    onClick={() => selectedToken(i)}
-                    className={styles?.selectedTokenModal}
+          </div>
+          <hr className={styles.tradeBoxHr} />
 
-                  >
-                    <div className={styles?.tokenFlex}>
-                      <>
-                        {val?.logoURI ? (
-                          <img
-                            src={val?.logoURI}
-                            alt="erc20 icon"
-                            // onError={(event) => {
-                            //   event.target.src = "/ERC20Error.png";
-                            //   event.onerror = null;
-                            // }}
-                            className={styles?.tokenImage}
-                          />
-                        ) : (
-                          <Image
-                            src="/ERC20Error.png"
-                            width={25}
-                            height={25}
-                            alt="erc20 icon"
-                            className={styles?.tokenImage}
-                          />
-                        )}
-                      </>
-                      <div>
-                        <p className={styles?.tokenListHeader}>{val?.name}</p>
-                        <p className={styles?.tokenListSymbol}>{val?.symbol}</p>
-                      </div>
-                    </div>
-                    <p className={styles?.tokenListChain}>{getNetworkID()}</p>
-                  </div>
-                );
-              })}
 
-              {/* <button
-                className={style.loadMoreButton}
-                onClick={() => getMoreToken()}
-              >
-                <svg
-                  width="15"
-                  height="15"
-                  viewBox="0 0 15 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z"
-                    fill="currentColor"
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                Load More
-              </button> */}
+          <div style={{ display: "flex", alignItems: "start", justifyContent: "center" }}>
+            <div className={styles.chainList}>
+              <h3 style={{ marginBottom: "1rem" }}>Chains</h3>
+              <div className={styles.chainSelect}>
+                <div className={styles.chainSelectDiv}>
+                  <img src="eth-icon.svg" alt="eth-icon" />
+                  <p>Ethereum</p>
+                </div>
+
+                <div className={styles.chainSelectDiv}>
+                  <img src="polygon-icon.svg" alt="polygon-icon" />
+                  <p>Polygon</p>
+                </div>
+              </div>
             </div>
-          ) : (
-            <p>No Data</p>
-          )}
+
+
+            {tokenData?.length !== 0 ? (
+              <>
+                <div className={styles?.tokenList}>
+                  <h3 style={{ marginBottom: "1rem" }}>Tranding</h3>
+
+                  {tokenData?.map((val, i) => {
+                    return (
+                      <div
+                        key={i}
+                        onClick={() => selectedToken(i)}
+                        className={styles?.selectedTokenModal}
+
+                      >
+                        <div className={styles?.tokenFlex}>
+                          <>
+                            {val?.logoURI ? (
+                              <img
+                                src={val?.logoURI}
+                                alt="erc20 icon"
+                                // onError={(event) => {
+                                //   event.target.src = "/ERC20Error.png";
+                                //   event.onerror = null;
+                                // }}
+                                className={styles?.tokenImage}
+                              />
+                            ) : (
+                              <Image
+                                src="/ERC20Error.png"
+                                width={25}
+                                height={25}
+                                alt="erc20 icon"
+                                className={styles?.tokenImage}
+                              />
+                            )}
+                          </>
+                          <div>
+                            <p className={styles?.tokenListHeader}>{val?.name}</p>
+                            <p className={styles?.tokenListSymbol}>{val?.symbol}</p>
+                          </div>
+                        </div>
+                        <p className={styles?.tokenListChain}>{getNetworkID()}</p>
+                      </div>
+                    );
+                  })}
+
+                </div>
+
+              </>
+
+            ) : (
+              <p>No Data</p>
+            )}
+
+
+          </div>
+
+
         </div>
       );
     } catch (e) {
@@ -222,7 +228,7 @@ function TradeBox({ tokendata }) {
     //console.log("net ", networkNumber)
     if (networkNumber == 137) return "polygon-pos";
     return "ethereum";
-}
+  }
 
 
   function selectedToken(index) {
@@ -230,13 +236,13 @@ function TradeBox({ tokendata }) {
 
       setSelectSellToken(tokenData?.[index]);
       setSellToken(tokenData?.[index]);
-      
+
 
     } else if (toggleToken === true) {
       setSelectBuyToken(tokenData?.[index]);
 
       setReceiveToken(tokenData?.[index]);
-      
+
     }
     setBuyTokenAmount(0);
     setSellTokenAmount(0);
@@ -460,9 +466,9 @@ function TradeBox({ tokendata }) {
         value: priceData?.value,
         gasPrice: priceData?.gasPrice,
       };
-    
+
       let hashKey = await privateClient?.sendTransaction(txParams);
-  
+
       const id = toast.loading("Please wait...");
 
       //console.log("hashkey ", hashKey);
@@ -555,8 +561,8 @@ function TradeBox({ tokendata }) {
             />
           </div>
           {
-          (priceJson?.buyAmount)?  ( selectBuyToken?.decimals && buytokenFiatPrice)? <p className={styles.fiatPrice}> {((formatUnits(priceJson?.buyAmount,selectBuyToken?.decimals))*buytokenFiatPrice)?.toFixed(2)}USD</p>:<div style={{display:"flex", justifyContent:"flex-end", marginTop:"1rem", marginRight:"0.6rem"}}><Skeleton className="h-3 w-1/5 rounded-lg" /></div>:<span style={{height:"0.8rem", width:"1rem", margin: "0.7rem 0.6rem 1rem 0rem"}}></span>
-         }
+            (priceJson?.buyAmount) ? (selectBuyToken?.decimals && buytokenFiatPrice) ? <p className={styles.fiatPrice}> {((formatUnits(priceJson?.buyAmount, selectBuyToken?.decimals)) * buytokenFiatPrice)?.toFixed(2)}USD</p> : <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "1rem", marginRight: "0.6rem" }}><Skeleton className="h-3 w-1/5 rounded-lg" /></div> : <span style={{ height: "0.8rem", width: "1rem", margin: "0.7rem 0.6rem 1rem 0rem" }}></span>
+          }
         </div>
 
 
@@ -630,11 +636,11 @@ function TradeBox({ tokendata }) {
               onWheel={numberInputOnWheelPreventChange}
             />
           </div>
-         {
-          (priceJson?.buyAmount)?  ( selectBuyToken?.decimals && buytokenFiatPrice)? <p className={styles.fiatPrice}> {((formatUnits(priceJson?.buyAmount,selectBuyToken?.decimals))*buytokenFiatPrice)?.toFixed(2)}USD</p>:<div style={{display:"flex", justifyContent:"flex-end", marginTop:"1rem", marginRight:"0.6rem"}}><Skeleton className="h-3 w-1/5 rounded-lg" /></div>:<></>
-         }
-          
-           
+          {
+            (priceJson?.buyAmount) ? (selectBuyToken?.decimals && buytokenFiatPrice) ? <p className={styles.fiatPrice}> {((formatUnits(priceJson?.buyAmount, selectBuyToken?.decimals)) * buytokenFiatPrice)?.toFixed(2)}USD</p> : <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "1rem", marginRight: "0.6rem" }}><Skeleton className="h-3 w-1/5 rounded-lg" /></div> : <></>
+          }
+
+
         </div>
 
 
@@ -757,11 +763,11 @@ function TradeBox({ tokendata }) {
         </div>
       </div>
       <>
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange} style={{ backgroundColor: "black", color: "white" }}>
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange} style={{ backgroundColor: "black", color: "white" }} size="xl" >
           <ModalContent>
             {(onClose) => (
               <>
-                <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+                {/* <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader> */}
                 <ModalBody>
                   {modelTokenList()}
                 </ModalBody>
@@ -773,7 +779,7 @@ function TradeBox({ tokendata }) {
 
 
 
-      <ToastContainer theme="dark"/>
+      <ToastContainer theme="dark" />
 
     </>
   )
