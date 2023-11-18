@@ -53,7 +53,7 @@ const TopNavbar = () => {
             <div className={styles.search}>
 
             </div>
- {/* <div className={styles.search}>
+            {/* <div className={styles.search}>
       <Input type="email" label="Email" />
      </div> */}
 

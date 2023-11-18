@@ -37,7 +37,7 @@ const SideNavBar = () => {
 
 			</div>
 			<div className={styles.navMenu}>
-				{menuItems.map(({ text, icon, index }) => (
+				{menuItems.map(({ text, icon}, index ) => (
 
 					<a
 						key={index}

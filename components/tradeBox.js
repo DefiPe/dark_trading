@@ -12,8 +12,10 @@ import { erc20ABI, getNetwork } from "@wagmi/core";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import publicClientViem from "@/utils/client";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Skeleton, Divider } from "@nextui-org/react";
-
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Skeleton, Divider, Spacer } from "@nextui-org/react";
+import { Badge, Avatar } from "@nextui-org/react";
+import NotificationIcon from "@/components/NotificationIcon";
+import { Setting4 } from "iconsax-react";
 
 // const customStyles = {
 //   content: {
@@ -33,12 +35,25 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const ZERO_EX_PROXY = "0xdef1c0ded9bec7f1a1670819833240f027b25eff";
 
+const networkList = [
+  {
+    name: "Ethereum",
+    icon: "eth-icon.svg",
+    alt: "ethereum-icon"
+  },
+  {
+    name: "Polygon",
+    icon: "polygon-icon.svg",
+    alt: "polygon-icon.svg",
+  },
+]
+
 function TradeBox({ tokendata }) {
   //console.log("alham dulillah ",tokendata);
 
   //const [modalIsOpen, setIsOpen] = useState(false); // Model is Open or Not
-  const [buyAmount, setBuyAmount] = useState(); //Buy token amount
-  const [buyTokenAmount, setBuyTokenAmount] = useState(); //Buy token amount
+  const [networkCss, setNetworkCss] = useState(1); //Buy token amount
+  const [tokenSelectMsg, setTokenSelectMsg] = useState("Trending"); //Buy token amount
   const [sellTokenAmount, setSellTokenAmount] = useState(null); //Sell token amount
   const [tokenData, setTokenData] = useState(null);
 
@@ -92,7 +107,11 @@ function TradeBox({ tokendata }) {
     if (chain?.id != networkNumber) {
       setNetworkNumber(chain?.id);
       setTokenData([]);
-      //console.log("network change");
+      if (chain?.id == "137") {
+        setNetworkCss(2);
+      } else {
+        setNetworkCss(1);
+      }
       getFirstToken();
     }
   }, [chain?.id != networkNumber]);
@@ -128,6 +147,26 @@ function TradeBox({ tokendata }) {
   }
 
 
+  async function getSearchToken(_val) {
+    if (_val) {
+      let priceJson = await fetch(
+        `https://api.defipe.io/searchbychainId/${chain?.id ? chain?.id : 1
+        }/${_val}`
+      );
+
+      let priceData = await priceJson?.json();
+      //console.log("Tks ", priceData);
+      if (priceData != []) {
+        setTokenData(priceData);
+        setTokenSelectMsg("Search results")
+      }
+    } else {
+      getFirstToken();
+      setTokenSelectMsg("Trending")
+    }
+  }
+
+
   function modelTokenList() {
     try {
       return (
@@ -143,27 +182,31 @@ function TradeBox({ tokendata }) {
           <hr className={styles.tradeBoxHr} />
 
 
-          <div style={{ display: "flex", alignItems: "start", justifyContent: "center" }}>
+          <div className={styles.tradeFlex}>
             <div className={styles.chainList}>
-              <h3 style={{ marginBottom: "1rem" }}>Chains</h3>
+              <h3>Chains</h3>
               <div className={styles.chainSelect}>
-                <div className={styles.chainSelectDiv}>
-                  <img src="eth-icon.svg" alt="eth-icon" />
-                  <p>Ethereum</p>
-                </div>
+                {networkList.map(({ name, icon, alt }, index) => (
 
-                <div className={styles.chainSelectDiv}>
-                  <img src="polygon-icon.svg" alt="polygon-icon" />
-                  <p>Polygon</p>
-                </div>
+                  <div className={styles.chainSelectDiv} key={index}
+                    style={(networkCss == index + 1) ? { backgroundColor: "#242731", color: "#6C5DD3", border: "2px solid #6C5DD3" } : { color: "yellow" }}
+                  >
+
+                    <img src={icon} alt={alt} />
+                    <p>{name}</p>
+                  </div>
+
+                ))}
               </div>
             </div>
+
+
 
 
             {tokenData?.length !== 0 ? (
               <>
                 <div className={styles?.tokenList}>
-                  <h3 style={{ marginBottom: "1rem" }}>Tranding</h3>
+                  <h3 style={{ marginBottom: "1rem" }}>{tokenSelectMsg}</h3>
 
                   {tokenData?.map((val, i) => {
                     return (
@@ -176,13 +219,18 @@ function TradeBox({ tokendata }) {
                         <div className={styles?.tokenFlex}>
                           <>
                             {val?.logoURI ? (
+
+                              // <Badge content={<NotificationIcon size={20} />}>
+                              //   <Avatar
+
+                              //     radius="full"
+                              //     src={val?.logoURI}
+                              //   />
+                              // </Badge>
                               <img
                                 src={val?.logoURI}
                                 alt="erc20 icon"
-                                // onError={(event) => {
-                                //   event.target.src = "/ERC20Error.png";
-                                //   event.onerror = null;
-                                // }}
+
                                 className={styles?.tokenImage}
                               />
                             ) : (
@@ -226,8 +274,8 @@ function TradeBox({ tokendata }) {
 
   function getNetworkID() {
     //console.log("net ", networkNumber)
-    if (networkNumber == 137) return "polygon-pos";
-    return "ethereum";
+    if (networkNumber == 137) return "Polygon-pos";
+    return "Ethereum";
   }
 
 
@@ -244,7 +292,7 @@ function TradeBox({ tokendata }) {
       setReceiveToken(tokenData?.[index]);
 
     }
-    setBuyTokenAmount(0);
+    //setBuyTokenAmount(0);
     setSellTokenAmount(0);
     //setIsOpen(false);
     onOpenChange(false);
@@ -501,7 +549,8 @@ function TradeBox({ tokendata }) {
           <h3>Swap</h3>
           <div>
             {/* <Image src="reload-icon.svg" alt="" height={100} width={100} className={styles.tradeSetting} /> */}
-            <Image src="trading-setting.svg" alt="" height={100} width={100} className={styles.tradeSetting} />
+            {/* <Image src="trading-setting.svg" alt="" height={100} width={100} className={styles.tradeSetting} /> */}
+            <Setting4 size="32" color="#ffffff" className={styles.tradeSetting} />
           </div>
         </div>
 
@@ -554,14 +603,14 @@ function TradeBox({ tokendata }) {
               name="send_amount"
               type="number"
               step="0.0"
-              placeholder="0.00"
+              placeholder="0"
               onChange={(event) => setSellTokenAmount(event.target.value)}
               value={sellTokenAmount || ""}
               onWheel={numberInputOnWheelPreventChange}
             />
           </div>
           {
-            (priceJson?.buyAmount) ? (selectBuyToken?.decimals && buytokenFiatPrice) ? <p className={styles.fiatPrice}> {((formatUnits(priceJson?.buyAmount, selectBuyToken?.decimals)) * buytokenFiatPrice)?.toFixed(2)}USD</p> : <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "1rem", marginRight: "0.6rem" }}><Skeleton className="h-3 w-1/5 rounded-lg" /></div> : <span style={{ height: "0.8rem", width: "1rem", margin: "0.7rem 0.6rem 1rem 0rem" }}></span>
+            (priceJson?.buyAmount) ? (selectBuyToken?.decimals && buytokenFiatPrice) ? <p className={styles.fiatPrice}> ~ {((formatUnits(priceJson?.buyAmount, selectBuyToken?.decimals)) * buytokenFiatPrice)?.toFixed(2)} USD</p> : <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "1rem", marginRight: "0.6rem" }}><Skeleton className="h-3 w-1/5 rounded-lg" /></div> : <Spacer y={11} />
           }
         </div>
 
@@ -623,7 +672,7 @@ function TradeBox({ tokendata }) {
             <input
               name="token_amount"
               type="text"
-              placeholder="0.00"
+              placeholder="0"
               value={
                 priceJson?.buyAmount
                   ? formatUnits(
@@ -637,23 +686,11 @@ function TradeBox({ tokendata }) {
             />
           </div>
           {
-            (priceJson?.buyAmount) ? (selectBuyToken?.decimals && buytokenFiatPrice) ? <p className={styles.fiatPrice}> {((formatUnits(priceJson?.buyAmount, selectBuyToken?.decimals)) * buytokenFiatPrice)?.toFixed(2)}USD</p> : <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "1rem", marginRight: "0.6rem" }}><Skeleton className="h-3 w-1/5 rounded-lg" /></div> : <></>
+            (priceJson?.buyAmount) ? (selectBuyToken?.decimals && buytokenFiatPrice) ? <p className={styles.fiatPrice}> ~ {((formatUnits(priceJson?.buyAmount, selectBuyToken?.decimals)) * buytokenFiatPrice)?.toFixed(2)} USD</p> : <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "1rem", marginRight: "0.6rem" }}><Skeleton className="h-3 w-1/5 rounded-lg" /></div> : <Spacer y={8} />
           }
-
 
         </div>
 
-
-        {/* <button
-          //onClick={(e) => trySwap(e)}
-          disabled={false}
-          className={styles.button34}
-          role="button"
-        >
-          Connect Wallet
-        </button> */}
-
-        {/* <div className={styles?.buttonWraper}> */}
         {isConnected == false ? (
           <>
             {openConnectModal && (
@@ -695,10 +732,11 @@ function TradeBox({ tokendata }) {
 
 
 
-        <div className={styles.gasBox}>
-          {priceJson?.price == null ? (
-            <></>
-          ) : (
+
+        {priceJson?.price == null ? (
+          <div className={styles.gasDiv}></div>
+        ) : (
+          <div className={styles.gasBox}>
             <>
               <div className={styles.flexGasPrice}>
                 <svg
@@ -759,11 +797,13 @@ function TradeBox({ tokendata }) {
                 <p> {parseFloat((formatUnits(priceJson?.gasPrice, 9)))?.toFixed(2)} Gwei</p>
               </div>
             </>
-          )}
-        </div>
+          </div>
+        )}
       </div>
+
+
       <>
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange} style={{ backgroundColor: "black", color: "white" }} size="xl" >
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange} style={{ backgroundColor: "black", color: "white" }} size="2xl" >
           <ModalContent>
             {(onClose) => (
               <>
