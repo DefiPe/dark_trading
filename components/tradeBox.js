@@ -75,6 +75,7 @@ function TradeBox({ tokendata }) {
   const [swapBtnMessage, setSwapBtnMessage] = useState("Swap Now"); // Message on button
   const [disableSwapBtn, setDisableSwapBtn] = useState(false); // Flag for Token Swap Button
   const [approveTougle, setApproveTougle] = useState(false); // Flag for ERC20 Approved or Not
+  const [paginationId, setPaginationId] = useState(2); // Pagination id of Token Data Load More
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -99,7 +100,24 @@ function TradeBox({ tokendata }) {
 
   useEffect(() => {
     setReceiveToken(tokenData?.[0]);
+    // console.log("hollaa due to token Dats")
+    // getFirstToken();
   }, [tokenData])
+
+  useEffect(() => {
+    //setReceiveToken(tokenData?.[0]);
+    // console.log("hollaa due to token Dats")
+    (tokenData == null) && getFirstToken();
+  }, [])
+
+  useEffect(() => {
+    //setReceiveToken(tokenData?.[0]);
+    // console.log("hollaa due to token Dats")
+    isOpen && getFirstToken();
+  }, [isOpen == true])
+
+
+  
 
   useEffect(() => {
     //console.log(chain?.id, "hhhhf", networkNumber);
@@ -112,6 +130,7 @@ function TradeBox({ tokendata }) {
       } else {
         setNetworkCss(1);
       }
+      console.log("hollaa due to Network")
       getFirstToken();
     }
   }, [chain?.id != networkNumber]);
@@ -130,6 +149,7 @@ function TradeBox({ tokendata }) {
 
   async function getFirstToken() {
     try {
+      console.log("holla")
       let data = await fetch(
         `https://api.defipe.io/pagination/${chain?.id ? chain?.id : 1
         }?page=1&limit=10`
@@ -148,6 +168,7 @@ function TradeBox({ tokendata }) {
 
 
   async function getSearchToken(_val) {
+    console.log("eta ",_val);
     if (_val) {
       let priceJson = await fetch(
         `https://api.defipe.io/searchbychainId/${chain?.id ? chain?.id : 1
@@ -160,9 +181,26 @@ function TradeBox({ tokendata }) {
         setTokenData(priceData);
         setTokenSelectMsg("Search results")
       }
-    } else {
+    }
+     else {
       getFirstToken();
       setTokenSelectMsg("Trending")
+    }
+  }
+
+
+  async function getMoreToken() {
+    try {
+      let data = await fetch(
+        `https://api.defipe.io/pagination/${chain?.id ? chain?.id : 1
+        }?page=${paginationId}&limit=10`
+      );
+      let jsonVal = await data.json();
+      //console.log("Data ", paginationId);
+      setTokenData((tokenData) => [...tokenData, ...jsonVal?.data]);
+      setPaginationId(paginationId + 1);
+    } catch (e) {
+      console.log("error ", e);
     }
   }
 
@@ -174,7 +212,11 @@ function TradeBox({ tokendata }) {
           <div className={styles?.tokenModalInput}>
             <input
               placeholder="Search Token or paste address"
-              onChange={(event) => getSearchToken(event?.target?.value)}
+              onChange={(event) => 
+                // (event?.target?.value?.length > 2) &&
+                 getSearchToken(event?.target?.value)
+
+              }
             />
 
 
@@ -252,6 +294,16 @@ function TradeBox({ tokendata }) {
                       </div>
                     );
                   })}
+
+
+                  <button
+                    //className={style.loadMoreButton}
+                    style={{ margin: "1rem", backgroundColor: "red", color: "white" }}
+                    onClick={() => getMoreToken()}
+                  >
+
+                    Load More
+                  </button>
 
                 </div>
 
@@ -618,20 +670,7 @@ function TradeBox({ tokendata }) {
 
         <div className={styles.flexTradeBoxHr}>
           <hr className={styles.tradeBoxHr} />
-          {/* <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 20"
-          strokeWidth="1.2"
-          stroke="currentColor"
-          className="icon-size"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg> */}
+
           <Image src="down-arrow.svg" alt="" height={100} width={100} className={styles.tradeTougle} />
           <hr className={styles.tradeBoxHr} />
         </div>
@@ -807,11 +846,13 @@ function TradeBox({ tokendata }) {
           <ModalContent>
             {(onClose) => (
               <>
-                {/* <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader> */}
+               
                 <ModalBody>
                   {modelTokenList()}
                 </ModalBody>
+                
               </>
+
             )}
           </ModalContent>
         </Modal>

@@ -8,11 +8,10 @@ import { useAccount } from "wagmi";
 //import {SearchIcon} from "./SearchIcon";
 
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
-
-
-
-
-
+import NotificationIcon from "@/components/NotificationIcon";
+import Hamberger from "@/components/Hamberger";
+import Cross from "@/components/Cross";
+import { HambergerMenu } from "iconsax-react";
 const TopNavbar = () => {
   const [isFlag, setIsFlag] = useState(false);
 
@@ -140,7 +139,7 @@ const TopNavbar = () => {
               </NavbarItem>
             </NavbarContent>
             <div style={{ width: "60%", display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
-              {isConnected ? (
+              {/* {isConnected ? (
                 <ConnectButton accountStatus="address" chainStatus="icon" />
               ) : (
                 <>
@@ -155,13 +154,14 @@ const TopNavbar = () => {
                     </button>
                   )}
                 </>
-              )}
+              )} */}
               <NavbarContent justify="end">
 
                 <NavbarMenuToggle
                   aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                   className="sm:hidden"
-                // icon={isMenuOpen?<img src='/reload-icon.svg' alt=""/>:<img src='/hamburger_menu.svg' alt=""/>}
+                  icon={isMenuOpen ? <Cross /> : <HambergerMenu size="44" color="#ffffff"/>}
+                  style={{height:"3rem", width:"3rem"}}
                 />
               </NavbarContent>
 

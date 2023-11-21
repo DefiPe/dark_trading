@@ -11,14 +11,16 @@ const DexLayout = ({ tokenData }) => {
     <>
       <MainLayout >
         <div className={styles.dexLayout}>
-          <TokenStatusBar />
-          <div className={styles.dexContent}>
-            {/* <TokenStatusBar/> */}
-            <Graph />
-            <div className={styles.tradeBoxContainer}>
-              <TradeBox tokendata={tokenData} />
+          <TokenStatusBar>
+            <div className={styles.dexContent}>
+              {/* <TokenStatusBar/> */}
+              <Graph />
+              <div className={styles.tradeBoxContainer}>
+                <TradeBox tokendata={tokenData} />
+              </div>
             </div>
-          </div>
+          </TokenStatusBar>
+
         </div>
 
       </MainLayout >
