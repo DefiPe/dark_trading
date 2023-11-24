@@ -48,8 +48,7 @@ const networkList = [
   },
 ]
 
-function TradeBox({ tokendata }) {
-  //console.log("alham dulillah ",tokendata);
+function TradeBox({ initialData }) {
 
   //const [modalIsOpen, setIsOpen] = useState(false); // Model is Open or Not
   const [networkCss, setNetworkCss] = useState(1); //Buy token amount
@@ -60,7 +59,7 @@ function TradeBox({ tokendata }) {
   const [estimatedGas, setEstimatedGas] = useState(null);
   const [toggleToken, setToggleToken] = useState(); // Distinguish between buy and sell Model
 
-  const [selectBuyToken, setSelectBuyToken] = useState(tokenData?.[0]); // Buy Token Id
+  const [selectBuyToken, setSelectBuyToken] = useState(initialData); // Buy Token Id
   const [selectSellToken, setSelectSellToken] = useState(null); // Sell Token Id
 
   //const receiveToken = useNetworkStore((state) => state.receiveToken);
@@ -99,10 +98,10 @@ function TradeBox({ tokendata }) {
 
 
   useEffect(() => {
-    setReceiveToken(tokenData?.[0]);
+    setReceiveToken(initialData);
     // console.log("hollaa due to token Dats")
     // getFirstToken();
-  }, [tokenData])
+  }, [initialData])
 
   useEffect(() => {
     //setReceiveToken(tokenData?.[0]);
@@ -110,14 +109,12 @@ function TradeBox({ tokendata }) {
     (tokenData == null) && getFirstToken();
   }, [])
 
-  useEffect(() => {
-    //setReceiveToken(tokenData?.[0]);
-    // console.log("hollaa due to token Dats")
-    isOpen && getFirstToken();
-  }, [isOpen == true])
+  // useEffect(() => {
+  //   isOpen && getFirstToken();
+  // }, [isOpen == true])
 
 
-  
+
 
   useEffect(() => {
     //console.log(chain?.id, "hhhhf", networkNumber);
@@ -130,7 +127,7 @@ function TradeBox({ tokendata }) {
       } else {
         setNetworkCss(1);
       }
-      console.log("hollaa due to Network")
+    
       getFirstToken();
     }
   }, [chain?.id != networkNumber]);
@@ -149,16 +146,15 @@ function TradeBox({ tokendata }) {
 
   async function getFirstToken() {
     try {
-      console.log("holla")
       let data = await fetch(
         `https://api.defipe.io/pagination/${chain?.id ? chain?.id : 1
-        }?page=1&limit=10`
+        }?page=1&limit=40`
       );
       let jsonVal = await data?.json();
       // console.log(chain?.id, "Data ", jsonVal?.data);
       setTokenData(jsonVal?.data);
-      setSelectBuyToken(jsonVal?.data?.[0]);
-      setSelectSellToken(null);
+     // setSelectBuyToken(jsonVal?.data?.[0]);
+      //setSelectSellToken(null);
       setSellTokenAmount(null);
 
     } catch (e) {
@@ -168,7 +164,6 @@ function TradeBox({ tokendata }) {
 
 
   async function getSearchToken(_val) {
-    console.log("eta ",_val);
     if (_val) {
       let priceJson = await fetch(
         `https://api.defipe.io/searchbychainId/${chain?.id ? chain?.id : 1
@@ -182,7 +177,7 @@ function TradeBox({ tokendata }) {
         setTokenSelectMsg("Search results")
       }
     }
-     else {
+    else {
       getFirstToken();
       setTokenSelectMsg("Trending")
     }
@@ -212,9 +207,9 @@ function TradeBox({ tokendata }) {
           <div className={styles?.tokenModalInput}>
             <input
               placeholder="Search Token or paste address"
-              onChange={(event) => 
+              onChange={(event) =>
                 // (event?.target?.value?.length > 2) &&
-                 getSearchToken(event?.target?.value)
+                getSearchToken(event?.target?.value)
 
               }
             />
@@ -231,10 +226,10 @@ function TradeBox({ tokendata }) {
                 {networkList.map(({ name, icon, alt }, index) => (
 
                   <div className={styles.chainSelectDiv} key={index}
-                    style={(networkCss == index + 1) ? { backgroundColor: "#242731", color: "#6C5DD3", border: "2px solid #6C5DD3" } : { color: "yellow" }}
+                    style={(networkCss == index + 1) ? { backgroundColor: "#242731", color: "#6C5DD3", border: "2px solid #6C5DD3" } : {}}
                   >
 
-                    <img src={icon} alt={alt} />
+                    <Image src={`/${icon}`} alt={alt} height={100} width={100}/>
                     <p>{name}</p>
                   </div>
 
@@ -269,10 +264,12 @@ function TradeBox({ tokendata }) {
                               //     src={val?.logoURI}
                               //   />
                               // </Badge>
-                              <img
+                              <Image
+                                loader={() => val?.logoURI}
                                 src={val?.logoURI}
+                                width={100}
+                                height={100}
                                 alt="erc20 icon"
-
                                 className={styles?.tokenImage}
                               />
                             ) : (
@@ -671,7 +668,7 @@ function TradeBox({ tokendata }) {
         <div className={styles.flexTradeBoxHr}>
           <hr className={styles.tradeBoxHr} />
 
-          <Image src="down-arrow.svg" alt="" height={100} width={100} className={styles.tradeTougle} />
+          <Image src="/down-arrow.svg" alt="" height={100} width={100} className={styles.tradeTougle} />
           <hr className={styles.tradeBoxHr} />
         </div>
 
@@ -846,11 +843,11 @@ function TradeBox({ tokendata }) {
           <ModalContent>
             {(onClose) => (
               <>
-               
+
                 <ModalBody>
                   {modelTokenList()}
                 </ModalBody>
-                
+
               </>
 
             )}

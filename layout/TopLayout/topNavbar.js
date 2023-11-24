@@ -3,17 +3,11 @@ import styles from '@/styles/topNavbar.module.css';
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
-import Image from "next/image";
-// import menuImg from "@/public/hamburger_menu.svg";
-// import { Input } from "@nextui-org/react";
-//import {SearchIcon} from "./SearchIcon";
-
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
-import NotificationIcon from "@/components/NotificationIcon";
-import Hamberger from "@/components/Hamberger";
 import Cross from "@/components/Cross";
 import { HambergerMenu } from "iconsax-react";
-import { fuseSparknet } from "viem/chains";
+// import { fuseSparknet } from "viem/chains";
+import Image from "next/image";
 const TopNavbar = () => {
   const [isFlag, setIsFlag] = useState(false);
 
@@ -43,6 +37,7 @@ const TopNavbar = () => {
       {
         (isFlag) ? <>
           <div className={styles.topNavBar}>
+
             {/* <form className={styles.search}>
               <input
                 className={styles.xyz}
@@ -87,7 +82,7 @@ const TopNavbar = () => {
           {/* <div className={styles.topNavMobile}>
             <Link href="/">
 
-              <img
+              <Image
                 src="/white-logo.svg"
                 alt="defipe_logo"
                 className={styles.logoIcon}
@@ -95,7 +90,7 @@ const TopNavbar = () => {
 
             </Link>
 
-            <img
+            <Image
               src="/hamburger_menu.svg"
               alt="defipe_logo"
               className={styles.hambergerMenu}
@@ -113,9 +108,10 @@ const TopNavbar = () => {
               />
               <NavbarBrand>
                 <Link href="/">
-
-                  <img
+                  <Image
                     src="/white-logo.svg"
+                    width={100}
+                    height={100}
                     alt="defipe_logo"
                     className={styles.logoIcon}
                   />
@@ -163,8 +159,8 @@ const TopNavbar = () => {
                 <NavbarMenuToggle
                   aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                   className="sm:hidden"
-                  icon={isMenuOpen ? <Cross /> : <HambergerMenu size="44" color="#ffffff"/>}
-                  style={{height:"3rem", width:"3rem"}}
+                  icon={isMenuOpen ? <Cross /> : <HambergerMenu size="44" color="#ffffff" />}
+                  style={{ height: "3rem", width: "3rem" }}
                 />
               </NavbarContent>
 
@@ -211,17 +207,21 @@ const TopNavbar = () => {
           <div className={styles.topNavMobile}>
           <Link href="/">
 
-            <img
+            <Image 
               src="/white-logo.svg"
               alt="defipe_logo"
+              height={100}
+              width={100}
               className={styles.logoIcon}
               />
 
           </Link>
           <div>
             <button className={styles.menuHamburger} onClick={() => (setToggleMenu(true))}>
-            <img
-            src="hamurger.svg"
+            <Image 
+            src="/hamurger.svg"
+            height={100}
+            width={100}
             />
             </button>
 
@@ -233,13 +233,16 @@ const TopNavbar = () => {
           </div>
           <div className={styles.menuItemDiv} style={toggleMenu?{width:'80vw',left:'0px'}:{width:'0px',left:'-50rem'}}>
             <div className={styles.menuIconDiv}>
-            <img
-              src="lg.svg"
+            <Image
+              src="/lg.svg"
               alt="defipe_logo"
               className={styles.logoIcon}
+              height={100}
+              width={100}
               />
               <button onClick={() => (setToggleMenu(false))}>
-              <img src="plus.svg"
+              <Image src="/plus.svg" height={100}
+            width={100}
               />
             </button>
 
@@ -254,10 +257,10 @@ const TopNavbar = () => {
            
             {
               (toggleMenu)?<> <div className={styles.menuItems}>
-              <Link href="#"><Image src="dashboard.svg" height={100} width={100} className={styles.menuIcon}/>Dashboard</Link>
-              <Link href="#"><Image src="market.svg" height={100} width={100} className={styles.menuIcon}/>Market</Link>
-              <Link href="#"><Image src="trade.svg" height={100} width={100} className={styles.menuIcon}/>Trade</Link>
-              <Link href="#"><Image src="settings.svg" height={100} width={100} className={styles.menuIcon}/>Settings</Link>
+              <Link href="#"><Image src="/dashboard.svg" height={100} width={100} className={styles.menuIcon}/>Dashboard</Link>
+              <Link href="#"><Image src="/market.svg" height={100} width={100} className={styles.menuIcon}/>Market</Link>
+              <Link href="#"><Image src="/trade.svg" height={100} width={100} className={styles.menuIcon}/>Trade</Link>
+              <Link href="#"><Image src="/settings.svg" height={100} width={100} className={styles.menuIcon}/>Settings</Link>
   
               </div>
               <button className={styles.connect}>

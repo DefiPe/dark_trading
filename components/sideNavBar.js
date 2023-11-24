@@ -2,6 +2,7 @@
 import styles from '@/styles/sideNavBar.module.css';
 import { Tooltip } from '@nextui-org/react';
 import { Home2, Setting, ArrangeVerticalSquare, Diagram } from 'iconsax-react';
+import Image from 'next/image';
 
 
 const SideNavBar = () => {
@@ -31,7 +32,7 @@ const SideNavBar = () => {
 		>
 			<div className={styles.navUpper}>
 				<div className={styles.navHeading}>
-					<img src="white-logo.svg" alt="defi logo" srcSet="" />
+					<Image src="/white-logo.svg" height={100} width={100} alt="defi logo" className={styles.defiPeLogo} />
 
 				</div>
 

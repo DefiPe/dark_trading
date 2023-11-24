@@ -16,7 +16,7 @@ const DexLayout = ({ tokenData }) => {
               {/* <TokenStatusBar/> */}
               <Graph />
               <div className={styles.tradeBoxContainer}>
-                <TradeBox tokendata={tokenData} />
+                <TradeBox initialData={tokenData} />
               </div>
             </div>
           </TokenStatusBar>
