@@ -1,6 +1,11 @@
-export async function getdata() {
+
+export async function getdata(network, token) {
     try {
-        let tokenAPI = await fetch(`https://api.defipe.io/pagination/1?page=1&limit=10`);
+        let networkID=1;
+        if(network == "polygon") {
+            networkID=137;
+        } 
+        let tokenAPI = await fetch(`https://api.defipe.io/searchbychainId/${networkID}/${token}`);
         let tokenJSON = await tokenAPI?.json();
         return (tokenJSON)? tokenJSON:null;
     } catch (e) {

@@ -3,15 +3,10 @@ import styles from '@/styles/topNavbar.module.css';
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
-// import menuImg from "@/public/hamburger_menu.svg";
-// import { Input } from "@nextui-org/react";
-//import {SearchIcon} from "./SearchIcon";
-
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
-import NotificationIcon from "@/components/NotificationIcon";
-import Hamberger from "@/components/Hamberger";
 import Cross from "@/components/Cross";
 import { HambergerMenu } from "iconsax-react";
+import Image from "next/image";
 const TopNavbar = () => {
   const [isFlag, setIsFlag] = useState(false);
 
@@ -40,6 +35,7 @@ const TopNavbar = () => {
       {
         (isFlag) ? <>
           <div className={styles.topNavBar}>
+
             {/* <form className={styles.search}>
               <input
                 className={styles.xyz}
@@ -110,9 +106,10 @@ const TopNavbar = () => {
               /> */}
               <NavbarBrand>
                 <Link href="/">
-
-                  <img
+                  <Image
                     src="/white-logo.svg"
+                    width={100}
+                    height={100}
                     alt="defipe_logo"
                     className={styles.logoIcon}
                   />
@@ -160,8 +157,8 @@ const TopNavbar = () => {
                 <NavbarMenuToggle
                   aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                   className="sm:hidden"
-                  icon={isMenuOpen ? <Cross /> : <HambergerMenu size="44" color="#ffffff"/>}
-                  style={{height:"3rem", width:"3rem"}}
+                  icon={isMenuOpen ? <Cross /> : <HambergerMenu size="44" color="#ffffff" />}
+                  style={{ height: "3rem", width: "3rem" }}
                 />
               </NavbarContent>
 
