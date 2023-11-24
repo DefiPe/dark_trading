@@ -6,7 +6,6 @@ function Hamberger({ size, height, width, ...props }) {
         </svg>
 
 
-
     )
 }
 
