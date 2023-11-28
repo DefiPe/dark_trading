@@ -22,7 +22,6 @@ const TokenStatusBar = ({ children }) => {
     const setbuyTokenFiatPrice = useNetworkStore((state) => state.setBuyTokenFiatPrice);
     const setSellTokenFiatPrice = useNetworkStore((state) => state.setSellTokenFiatPrice);
     const {slug} = router.query;
-    console.log(slug);
 
 
     function getNetwork() {

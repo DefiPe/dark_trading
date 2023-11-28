@@ -1,7 +1,7 @@
 import DexLayout from "@/layout/DexLayout/dexLayout";
 import { getdata } from "@/server/initialData";
 import Head from "next/head";
-//import { getServerSideProps } from "next/dist/build/templates/pages";
+import data from "@/server/token.json";
 
 const Dex = (props: any) => {
 	return (
@@ -17,6 +17,7 @@ const Dex = (props: any) => {
 			</Head>
 			<main className="gray-dark text-foreground bg-background">
 				<DexLayout tokenData={props?.tokenJSON[0]} />
+
 			</main>
 		</>
 
@@ -24,16 +25,25 @@ const Dex = (props: any) => {
 	);
 };
 
-export async function getServerSideProps(context:any) {
+export async function getServerSideProps(context: any) {
 	let tokenJSON;
-	let slugUrl = context?.query?.slug;
-	//console.log("hullaa ", slugUrl[1]?.length);
-	if(slugUrl?.length == 2 && slugUrl[1]?.length == 42) {
-		
-	    tokenJSON = await getdata(slugUrl[0], slugUrl[1]);
-		//console.log("hullaa ", tokenJSON);
+	let slugUrl: any = context?.query?.slug;
+	let staticUrl: any = data[0];
+
+
+	if (staticUrl?.[slugUrl[1]]?.[slugUrl[0]]) {
+		tokenJSON = [staticUrl?.[slugUrl[1]]?.[slugUrl[0]]];
 	}
-	
+
+	else if (slugUrl?.length == 2 && slugUrl[1]?.length == 42) {
+
+		tokenJSON = await getdata(slugUrl[0], slugUrl[1]);
+	} else {
+		return {
+			notFound: true,
+		}
+	}
+
 	return {
 		props: { tokenJSON }
 	}

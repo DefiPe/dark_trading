@@ -13,25 +13,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import publicClientViem from "@/utils/client";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Skeleton, Divider, Spacer } from "@nextui-org/react";
-import { Badge, Avatar } from "@nextui-org/react";
-import NotificationIcon from "@/components/NotificationIcon";
 import { Setting4 } from "iconsax-react";
+import { useRouter } from "next/router";
+import _ from "lodash";
 
-// const customStyles = {
-//   content: {
-//     top: '50%',
-//     left: '50%',
-//     right: 'auto',
-//     bottom: 'auto',
-//     marginRight: '-50%',
-//     transform: 'translate(-50%, -50%)',
-//     backgroundColor: "#1F2128"
-//   },
-// };
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
-
-//Modal.setAppElement('#__next');
 
 const ZERO_EX_PROXY = "0xdef1c0ded9bec7f1a1670819833240f027b25eff";
 
@@ -39,44 +26,46 @@ const networkList = [
   {
     name: "Ethereum",
     icon: "eth-icon.svg",
-    alt: "ethereum-icon"
+    alt: "ethereum-icon",
+    netWork: 1
   },
   {
     name: "Polygon",
     icon: "polygon-icon.svg",
     alt: "polygon-icon.svg",
+    netWork: 137
   },
 ]
 
 function TradeBox({ initialData }) {
-
-  //const [modalIsOpen, setIsOpen] = useState(false); // Model is Open or Not
   const [networkCss, setNetworkCss] = useState(1); //Buy token amount
   const [tokenSelectMsg, setTokenSelectMsg] = useState("Trending"); //Buy token amount
   const [sellTokenAmount, setSellTokenAmount] = useState(null); //Sell token amount
   const [tokenData, setTokenData] = useState(null);
-
-  const [estimatedGas, setEstimatedGas] = useState(null);
   const [toggleToken, setToggleToken] = useState(); // Distinguish between buy and sell Model
-
   const [selectBuyToken, setSelectBuyToken] = useState(initialData); // Buy Token Id
   const [selectSellToken, setSelectSellToken] = useState(null); // Sell Token Id
 
-  //const receiveToken = useNetworkStore((state) => state.receiveToken);
+
   const setReceiveToken = useNetworkStore((state) => state.setReceiveToken);
   const setSellToken = useNetworkStore((state) => state.setsellToken);
   const networkNumber = useNetworkStore((state) => state.networkId); // Hook of State Store of Network Id
   const setNetworkNumber = useNetworkStore((state) => state.setNetworkId); // Hook of State Store of Set Network Id
-
   const buytokenFiatPrice = useNetworkStore((state) => state.buyTokenFiatPrice);
   const selltokenFiatPrice = useNetworkStore((state) => state.sellTokenFiatPrice);
+
+
 
   const [swapBtnMessage, setSwapBtnMessage] = useState("Swap Now"); // Message on button
   const [disableSwapBtn, setDisableSwapBtn] = useState(false); // Flag for Token Swap Button
   const [approveTougle, setApproveTougle] = useState(false); // Flag for ERC20 Approved or Not
   const [paginationId, setPaginationId] = useState(2); // Pagination id of Token Data Load More
+  const [selectNetwork, setSelectNetwork] = useState(initialData?.chainId);
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const router = useRouter();
+  const { slug } = router.query;
+
 
   const { data: priceJson, isLoading } = useSWR(
     sellTokenAmount > 0 && selectSellToken != null
@@ -88,6 +77,7 @@ function TradeBox({ initialData }) {
       : null,
     fetcher
   );
+
   //console.log("Price ", priceJson);
   const { data: walletClient } = useWalletClient(); // Hook of Wallet public Data
   const { isConnected } = useAccount(); // Hook of Address is Connected of not
@@ -99,38 +89,31 @@ function TradeBox({ initialData }) {
 
   useEffect(() => {
     setReceiveToken(initialData);
-    // console.log("hollaa due to token Dats")
-    // getFirstToken();
+    setSelectBuyToken(initialData);
+    if (selectNetwork == "137") {
+      setNetworkCss(2);
+    } else {
+      setNetworkCss(1);
+    }
   }, [initialData])
 
   useEffect(() => {
-    //setReceiveToken(tokenData?.[0]);
-    // console.log("hollaa due to token Dats")
     (tokenData == null) && getFirstToken();
   }, [])
 
   // useEffect(() => {
-  //   isOpen && getFirstToken();
-  // }, [isOpen == true])
+  //   if (chain?.id != networkNumber) {
+  //     setNetworkNumber(chain?.id);
+  //     setTokenData([]);
+  //     if (chain?.id == "137") {
+  //       setNetworkCss(2);
+  //     } else {
+  //       setNetworkCss(1);
+  //     }
 
-
-
-
-  useEffect(() => {
-    //console.log(chain?.id, "hhhhf", networkNumber);
-
-    if (chain?.id != networkNumber) {
-      setNetworkNumber(chain?.id);
-      setTokenData([]);
-      if (chain?.id == "137") {
-        setNetworkCss(2);
-      } else {
-        setNetworkCss(1);
-      }
-    
-      getFirstToken();
-    }
-  }, [chain?.id != networkNumber]);
+  //     getFirstToken();
+  //   }
+  // }, [chain?.id != networkNumber]);
 
 
   useEffect(() => {
@@ -144,17 +127,24 @@ function TradeBox({ initialData }) {
   }, [sellTokenAmount]);
 
 
+  useEffect(() => {
+    getFirstToken();
+  }, [selectNetwork]);
+
+  function tokenToggle() {
+    let togData = selectBuyToken;
+    setSelectBuyToken(selectSellToken);
+    setSelectSellToken(togData);
+  }
+
+
   async function getFirstToken() {
     try {
       let data = await fetch(
-        `https://api.defipe.io/pagination/${chain?.id ? chain?.id : 1
-        }?page=1&limit=40`
+        `https://api.defipe.io/pagination/${selectNetwork}?page=1&limit=40`
       );
       let jsonVal = await data?.json();
-      // console.log(chain?.id, "Data ", jsonVal?.data);
       setTokenData(jsonVal?.data);
-     // setSelectBuyToken(jsonVal?.data?.[0]);
-      //setSelectSellToken(null);
       setSellTokenAmount(null);
 
     } catch (e) {
@@ -166,8 +156,7 @@ function TradeBox({ initialData }) {
   async function getSearchToken(_val) {
     if (_val) {
       let priceJson = await fetch(
-        `https://api.defipe.io/searchbychainId/${chain?.id ? chain?.id : 1
-        }/${_val}`
+        `https://api.defipe.io/searchbychainId/${selectNetwork}/${_val}`
       );
 
       let priceData = await priceJson?.json();
@@ -187,8 +176,7 @@ function TradeBox({ initialData }) {
   async function getMoreToken() {
     try {
       let data = await fetch(
-        `https://api.defipe.io/pagination/${chain?.id ? chain?.id : 1
-        }?page=${paginationId}&limit=10`
+        `https://api.defipe.io/pagination/${selectNetwork}?page=${paginationId}&limit=10`
       );
       let jsonVal = await data.json();
       //console.log("Data ", paginationId);
@@ -223,13 +211,13 @@ function TradeBox({ initialData }) {
             <div className={styles.chainList}>
               <h3>Chains</h3>
               <div className={styles.chainSelect}>
-                {networkList.map(({ name, icon, alt }, index) => (
+                {networkList.map(({ name, icon, alt, netWork }, index) => (
 
-                  <div className={styles.chainSelectDiv} key={index}
+                  <div className={styles.chainSelectDiv} key={index} onClick={() => { setNetworkCss(index + 1); setSelectNetwork(netWork) }}
                     style={(networkCss == index + 1) ? { backgroundColor: "#242731", color: "#6C5DD3", border: "2px solid #6C5DD3" } : {}}
                   >
 
-                    <Image src={`/${icon}`} alt={alt} height={100} width={100}/>
+                    <Image src={`/${icon}`} alt={alt} height={100} width={100} />
                     <p>{name}</p>
                   </div>
 
@@ -287,7 +275,7 @@ function TradeBox({ initialData }) {
                             <p className={styles?.tokenListSymbol}>{val?.symbol}</p>
                           </div>
                         </div>
-                        <p className={styles?.tokenListChain}>{getNetworkID()}</p>
+                        <p className={styles?.tokenListChain}>{getNetworkID(val?.chainId)}</p>
                       </div>
                     );
                   })}
@@ -321,29 +309,37 @@ function TradeBox({ initialData }) {
     }
   }
 
-  function getNetworkID() {
+  function getNetworkID(_val) {
     //console.log("net ", networkNumber)
-    if (networkNumber == 137) return "Polygon-pos";
+    if (_val == 137) return "Polygon";
     return "Ethereum";
+  }
+
+  function getNetworkFromName(_val) {
+    //console.log("net ", networkNumber)
+    if (_val == 137) return "polygon";
+    return "ethereum";
   }
 
 
   function selectedToken(index) {
-    if (toggleToken === false) {
+    if (slug[0] != getNetworkFromName(selectNetwork)) {
 
-      setSelectSellToken(tokenData?.[index]);
-      setSellToken(tokenData?.[index]);
+      //redirect(`/${getNetworkFromName(selectNetwork)}/eth`);
+      router.push(`/dex/${getNetworkFromName(selectNetwork)}/${tokenData?.[index]?.address}`)
 
-
-    } else if (toggleToken === true) {
-      setSelectBuyToken(tokenData?.[index]);
-
-      setReceiveToken(tokenData?.[index]);
-
+    } else {
+      if (toggleToken === false) {
+        setSelectSellToken(tokenData?.[index]);
+        setSellToken(tokenData?.[index]);
+      } else if (toggleToken === true) {
+        router.push(`/dex/${slug[0]}/${tokenData?.[index]?.address}`)
+        setSelectBuyToken(tokenData?.[index]);
+        setReceiveToken(tokenData?.[index]);
+      }
     }
-    //setBuyTokenAmount(0);
+
     setSellTokenAmount(0);
-    //setIsOpen(false);
     onOpenChange(false);
   }
 
@@ -495,19 +491,6 @@ function TradeBox({ initialData }) {
 
   async function approveFunction(approveAddress, approveAmount) {
     try {
-      // const publicClient = createPublicClient({
-      //   chain: polygon,
-      //   transport: http(
-      //     `https://polygon-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`
-      //   ),
-      // });
-
-      // const client = createWalletClient({
-      //   account: walletClient?.account.address,
-      //   chain: polygon,
-      //   transport: custom(walletClient),
-      // });
-
       const { request } = await publicClient?.simulateContract({
         account: walletClient?.account.address,
         address: selectSellToken?.address,
@@ -548,14 +531,6 @@ function TradeBox({ initialData }) {
   async function tradeNow() {
     try {
       let priceData = await getSwap();
-      // const client = createWalletClient({
-      //   account: walletClient?.account.address,
-      //   chain: polygon,
-      //   transport: custom(walletClient),
-      // });
-
-
-
       const txParams = {
         from: priceData?.from,
         to: priceData?.to,
@@ -668,7 +643,7 @@ function TradeBox({ initialData }) {
         <div className={styles.flexTradeBoxHr}>
           <hr className={styles.tradeBoxHr} />
 
-          <Image src="/down-arrow.svg" alt="" height={100} width={100} className={styles.tradeTougle} />
+          <Image src="/down-arrow.svg" alt="" height={100} width={100} className={styles.tradeTougle} onClick={() => { }} />
           <hr className={styles.tradeBoxHr} />
         </div>
 
@@ -740,6 +715,8 @@ function TradeBox({ initialData }) {
             )}
           </>
         ) : (
+
+        
           <>
             <button
               className={
@@ -748,8 +725,8 @@ function TradeBox({ initialData }) {
                   : styles?.button34
               }
               role="button"
-              disabled={!disableSwapBtn}
-              onClick={() =>
+              disabled={(selectNetwork != chain?.id) ? false : !disableSwapBtn}
+              onClick={(selectNetwork != chain?.id) ? async() => {await privateClient?.switchChain({ id: selectNetwork }) } : () =>
                 approveTougle
                   ? approveFunction(
                     ZERO_EX_PROXY,
@@ -761,9 +738,12 @@ function TradeBox({ initialData }) {
                   : tradeNow()
               }
             >
-              {swapBtnMessage}
+              {(selectNetwork != chain?.id) ? `Switch to ${getNetworkID(selectNetwork)} Network` : swapBtnMessage}
             </button>
           </>
+
+
+
         )}
 
 
