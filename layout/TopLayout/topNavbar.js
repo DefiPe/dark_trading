@@ -6,6 +6,7 @@ import { useAccount } from "wagmi";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
 import Cross from "@/components/Cross";
 import { HambergerMenu } from "iconsax-react";
+// import { fuseSparknet } from "viem/chains";
 import Image from "next/image";
 const TopNavbar = () => {
   const [isFlag, setIsFlag] = useState(false);
@@ -17,6 +18,7 @@ const TopNavbar = () => {
   const { openConnectModal } = useConnectModal();
   const { isConnected } = useAccount();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [toggleMenu,setToggleMenu]=useState(false)
 
   const menuItems = [
     "Trade",
@@ -80,7 +82,7 @@ const TopNavbar = () => {
           {/* <div className={styles.topNavMobile}>
             <Link href="/">
 
-              <img
+              <Image
                 src="/white-logo.svg"
                 alt="defipe_logo"
                 className={styles.logoIcon}
@@ -88,7 +90,7 @@ const TopNavbar = () => {
 
             </Link>
 
-            <img
+            <Image
               src="/hamburger_menu.svg"
               alt="defipe_logo"
               className={styles.hambergerMenu}
@@ -98,12 +100,12 @@ const TopNavbar = () => {
           </div> */}
 
 
-          <Navbar onMenuOpenChange={setIsMenuOpen} className={styles.topNavMobile}>
+          {/* <Navbar onMenuOpenChange={setIsMenuOpen} className={styles.topNavMobile}>
             <NavbarContent>
-              {/* <NavbarMenuToggle
+              <NavbarMenuToggle
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 className="sm:hidden"
-              /> */}
+              />
               <NavbarBrand>
                 <Link href="/">
                   <Image
@@ -136,7 +138,7 @@ const TopNavbar = () => {
               </NavbarItem>
             </NavbarContent>
             <div style={{ width: "60%", display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
-              {/* {isConnected ? (
+              {isConnected ? (
                 <ConnectButton accountStatus="address" chainStatus="icon" />
               ) : (
                 <>
@@ -151,7 +153,7 @@ const TopNavbar = () => {
                     </button>
                   )}
                 </>
-              )} */}
+              )}
               <NavbarContent justify="end">
 
                 <NavbarMenuToggle
@@ -169,9 +171,9 @@ const TopNavbar = () => {
               {menuItems.map((item, index) => (
                 <NavbarMenuItem key={`${item}-${index}`}>
                   <Link
-                    // color={
-                    //   index === 0 ? "white" : "foreground"
-                    // }
+                    color={
+                      index === 0 ? "white" : "foreground"
+                    }
                     className="w-full"
                     href={index == 0 ? "/" : "#"}
                     size="lg"
@@ -182,7 +184,7 @@ const TopNavbar = () => {
                   </Link>
                 </NavbarMenuItem>
               ))}
-              {/* {isConnected ? (
+              {isConnected ? (
                 <ConnectButton accountStatus="address" chainStatus="icon" />
               ) : (
                 <>
@@ -197,10 +199,77 @@ const TopNavbar = () => {
                     </button>
                   )}
                 </>
-              )} */}
+              )}
             </NavbarMenu>
 
-          </Navbar>
+          </Navbar> */}
+          <div className={styles.ham}>
+          <div className={styles.topNavMobile}>
+          <Link href="/">
+
+            <Image 
+              src="/white-logo.svg"
+              alt="defipe_logo"
+              height={100}
+              width={100}
+              className={styles.logoIcon}
+              />
+
+          </Link>
+          <div>
+            <button className={styles.menuHamburger} onClick={() => (setToggleMenu(true))}>
+            <Image 
+            src="/hamurger.svg"
+            height={100}
+            width={100}
+            />
+            </button>
+
+            
+            
+          </div>
+          </div>
+          
+          </div>
+          <div className={styles.menuItemDiv} style={toggleMenu?{width:'80vw',left:'0px'}:{width:'0px',left:'-50rem'}}>
+            <div className={styles.menuIconDiv}>
+            <Image
+              src="/lg.svg"
+              alt="defipe_logo"
+              className={styles.logoIcon}
+              height={100}
+              width={100}
+              />
+              <button onClick={() => (setToggleMenu(false))}>
+              <Image src="/plus.svg" height={100}
+            width={100}
+              />
+            </button>
+
+
+            </div>
+            {/* <ul className={styles.menuItems}>
+            <li>Dashboard</li>
+            <li>Market</li>
+            <li>Trade</li>
+            <li>Settings</li>
+            </ul> */}
+           
+            {
+              (toggleMenu)?<> <div className={styles.menuItems}>
+              <Link href="#"><Image src="/dashboard.svg" height={100} width={100} className={styles.menuIcon}/>Dashboard</Link>
+              <Link href="#"><Image src="/market.svg" height={100} width={100} className={styles.menuIcon}/>Market</Link>
+              <Link href="#"><Image src="/trade.svg" height={100} width={100} className={styles.menuIcon}/>Trade</Link>
+              <Link href="#"><Image src="/settings.svg" height={100} width={100} className={styles.menuIcon}/>Settings</Link>
+  
+              </div>
+              <button className={styles.connect}>
+              Connect Wallet
+            </button>
+              </>:<></>
+            }
+           
+            </div>
 
         </> : <></>}
 
