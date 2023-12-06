@@ -16,7 +16,7 @@ const Dex = (props: any) => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<main className="gray-dark text-foreground bg-background">
-			
+
 				<DexLayout tokenData={props?.tokenJSON[0]} />
 
 			</main>
