@@ -1,6 +1,3 @@
-
-
-
 .search {
   display: flex;
   align-items: center;
@@ -60,7 +57,7 @@
   width: 9.8rem;
 }
 
-@media (min-width:1001px) { 
+@media (min-width:1001px) {
   .topNavBar {
     width: 100%;
     height: 4rem;
@@ -68,6 +65,7 @@
     align-items: center;
     justify-content: space-evenly;
   }
+
   .topNavMobile {
     display: none;
   }
@@ -81,62 +79,76 @@
 
   .topNavMobile {
     display: flex;
-    width: 94%;
+    width: 88%;
     justify-content: space-between;
     align-items: center;
     margin: auto;
-    padding-top: 0.8rem;
-    
+    padding-top: 1.5rem;
+    padding-bottom: 0.6rem;
+
   }
 
-  .menuItems{
-   color: #fff;
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-}
+  .menuItems {
 
-.menuItemDiv{
-  height: 100vh;
-  background-color: #242731;
-  position: fixed;
-  top: 0;
-  /* left: 0; */
-  z-index: 1000;
-  display: flex;
-  width: 100%;
-  
-  justify-content: space-between;
-  flex-direction: column;
-  padding: 1.5rem 1.8rem;
-}
-.menuIcon{
-  width: 2.4rem;
-height:2.4rem;
-flex-shrink: 0;
-}
-.menuItems a{
-  margin-bottom: 2rem;
-  color: #fff;
-  font-size: 16px;
-}
-.menuIconDiv{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
 
-/* .menuItems li{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.3rem;
+    letter-spacing: 0px;
+    text-align: left;
+    color: #EFEFEF;
+
+
+  }
+
+  .menuItemDiv {
+    height: 100vh;
+    background-color: #242731;
+    position: fixed;
+    top: 0;
+    /* left: 0; */
+    z-index: 1000;
+    display: flex;
+    width: 100%;
+
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 1.5rem 1.8rem;
+  }
+
+  .menuIcon {
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-right: 1rem;
+  }
+
+  .menuItems a {
+    margin-bottom: 2rem;
+    color: #fff;
+    font-size: 16px;
+  }
+
+  .menuIconDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  /* .menuItems li{
   padding: 10px 0;
   text-align: center;
   list-style-type: none;
   transition: all .2s ease;
 } */
 
-/* .menuItems li:hover{
+  /* .menuItems li:hover{
   letter-spacing: 2px;
   opacity: .6;
 } */
@@ -152,50 +164,67 @@ flex-shrink: 0;
         transition: all .5s ease;
 } */
 
-.menuHamburger::before{
-    transform: translateY(-6px);
-}
+  .menuHamburger {
+    height: 2.3rem;
+    width: 2.3rem;
+  }
 
-.menuHamburger::after{
+  .menuHamburger::before {
+    transform: translateY(-6px);
+  }
+
+  .menuHamburger::after {
     transform: translateY(6px);
-}
-  
+  }
+
   .hambergerMenu {
     height: 1.5rem;
     width: 1.5rem;
   }
 
   .logoIcon {
-    width: 145.091px;
-height: 38px;
-flex-shrink: 0;
+    width: 2.7rem;
+    height: 2.7rem;
+    flex-shrink: 0;
   }
-.connect{
-  
-width: 214px;
-height: 48px;
-gap: 10px;
-margin: 0px auto;
-border-radius: 16px;
-background: #6C5DD3;
-}
+
+  .logoIconFull {
+    width: 8.5rem;
+    height: 5.7rem;
+    flex-shrink: 0;
+  }
+
+  .menuIconCross {
+    height: 2rem;
+    width: 2rem;
+  }
+
+  .connect {
+    width: 214px;
+    height: 48px;
+    gap: 10px;
+    margin: 0px auto;
+    border-radius: 16px;
+    background: #6C5DD3;
+  }
+
   .button {
     height: 2.2rem;
-  width: 8.5rem;
-  font-size: 0.8rem;
+    width: 8.5rem;
+    font-size: 0.8rem;
   }
 
-  .screen1_menu_btn input:checked ~.menuHamburger{
+  .screen1_menu_btn input:checked~.menuHamburger {
     transform: translateX(-50px);
     background: transparent;
-}
+  }
 
-.screen1_menu_btn input:checked ~.menuHamburger::before{
-  transform: rotate(45deg) translate(35px, -35px);
-}
+  .screen1_menu_btn input:checked~.menuHamburger::before {
+    transform: rotate(45deg) translate(35px, -35px);
+  }
 
-.screen1_menu_btn input:checked ~.menuHamburger::after{
-  transform: rotate(-45deg) translate(35px);
-}
+  .screen1_menu_btn input:checked~.menuHamburger::after {
+    transform: rotate(-45deg) translate(35px);
+  }
 
 }

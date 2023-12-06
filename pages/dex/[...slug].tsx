@@ -16,6 +16,7 @@ const Dex = (props: any) => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<main className="gray-dark text-foreground bg-background">
+			
 				<DexLayout tokenData={props?.tokenJSON[0]} />
 
 			</main>
@@ -33,9 +34,7 @@ export async function getServerSideProps(context: any) {
 
 	if (staticUrl?.[slugUrl[1]]?.[slugUrl[0]]) {
 		tokenJSON = [staticUrl?.[slugUrl[1]]?.[slugUrl[0]]];
-	}
-
-	else if (slugUrl?.length == 2 && slugUrl[1]?.length == 42) {
+	} else if (slugUrl?.length == 2 && slugUrl[1]?.length == 42) {
 
 		tokenJSON = await getdata(slugUrl[0], slugUrl[1]);
 	} else {

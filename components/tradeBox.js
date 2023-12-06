@@ -15,7 +15,8 @@ import publicClientViem from "@/utils/client";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Skeleton, Divider, Spacer } from "@nextui-org/react";
 import { Setting4 } from "iconsax-react";
 import { useRouter } from "next/router";
-import _ from "lodash";
+import LoadMoreBtn from "./LoadMoreBtn";
+
 
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -61,6 +62,7 @@ function TradeBox({ initialData }) {
   const [approveTougle, setApproveTougle] = useState(false); // Flag for ERC20 Approved or Not
   const [paginationId, setPaginationId] = useState(2); // Pagination id of Token Data Load More
   const [selectNetwork, setSelectNetwork] = useState(initialData?.chainId);
+  const { chain } = getNetwork(); // Hook for Chain Id
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const router = useRouter();
@@ -73,7 +75,7 @@ function TradeBox({ initialData }) {
       }&sellAmount=${parseUnits(
         sellTokenAmount.toString(),
         selectSellToken?.decimals
-      )}&networkID=${networkNumber}`
+      )}&networkID=${chain?.id}`
       : null,
     fetcher
   );
@@ -82,7 +84,6 @@ function TradeBox({ initialData }) {
   const { data: walletClient } = useWalletClient(); // Hook of Wallet public Data
   const { isConnected } = useAccount(); // Hook of Address is Connected of not
   const { openConnectModal } = useConnectModal(); // Hook of Wallet Connect by RainbowKit
-  const { chain } = getNetwork(); // Hook for Chain Id
   const [publicClient, privateClient] = publicClientViem();
 
 
@@ -119,12 +120,12 @@ function TradeBox({ initialData }) {
   useEffect(() => {
     if (selectSellToken !== null && sellTokenAmount != null) {
       // getPrice();
-      if (isConnected === true) {
+      if (isConnected == true) {
         enoughTokenFlag();
       }
     }
     //getCurrentFiatPrice?.usd && getFiatInputPrice();
-  }, [sellTokenAmount]);
+  }, [sellTokenAmount || selectSellToken?.address]);
 
 
   useEffect(() => {
@@ -146,6 +147,7 @@ function TradeBox({ initialData }) {
       let jsonVal = await data?.json();
       setTokenData(jsonVal?.data);
       setSellTokenAmount(null);
+    //console.log("get first ",jsonVal?.data);
 
     } catch (e) {
       console.log("error ", e);
@@ -242,34 +244,24 @@ function TradeBox({ initialData }) {
 
                       >
                         <div className={styles?.tokenFlex}>
-                          <>
-                            {val?.logoURI ? (
 
-                              // <Badge content={<NotificationIcon size={20} />}>
-                              //   <Avatar
+                          {(val?.logoURI) ? (<Image
+                            loader={() => val?.logoURI}
+                            src={val?.logoURI}
+                            width={100}
+                            height={100}
+                            alt="erc20_icon"
+                            className={styles?.tokenImage}
+                          />
+                          ) :
+                            <Skeleton className="flex rounded-full w-8 h-8" isLoaded={false} style={{
+                              height: "2rem",
+                              width: "2rem",
+                              marginRight: "0.5rem",
+                              //backgroundColor:"#242731"
+                            }} />
+                          }
 
-                              //     radius="full"
-                              //     src={val?.logoURI}
-                              //   />
-                              // </Badge>
-                              <Image
-                                loader={() => val?.logoURI}
-                                src={val?.logoURI}
-                                width={100}
-                                height={100}
-                                alt="erc20 icon"
-                                className={styles?.tokenImage}
-                              />
-                            ) : (
-                              <Image
-                                src="/ERC20Error.png"
-                                width={25}
-                                height={25}
-                                alt="erc20 icon"
-                                className={styles?.tokenImage}
-                              />
-                            )}
-                          </>
                           <div>
                             <p className={styles?.tokenListHeader}>{val?.name}</p>
                             <p className={styles?.tokenListSymbol}>{val?.symbol}</p>
@@ -281,14 +273,19 @@ function TradeBox({ initialData }) {
                   })}
 
 
-                  <button
+                  {/* <button
                     //className={style.loadMoreButton}
                     style={{ margin: "1rem", backgroundColor: "red", color: "white" }}
                     onClick={() => getMoreToken()}
                   >
 
                     Load More
-                  </button>
+                  </button> */}
+
+
+                  <Button size="sm" endContent={<LoadMoreBtn />} className={styles.loadMoreBtn} onClick={() => getMoreToken()}>
+                    Load More
+                  </Button>
 
                 </div>
 
@@ -361,30 +358,15 @@ function TradeBox({ initialData }) {
   async function getSwap() {
     try {
       if (sellTokenAmount > 0 && !selectBuyToken && !selectSellToken) return;
-      // let abc = {
-      //   buyToken: selectBuyToken?.address,
-      //   sellToken: selectSellToken?.address,
-      //   sellAmount: parseUnits(sellTokenAmount, selectSellToken?.decimals),
-      //   takerAddress: walletClient?.account?.address,
-      // };
-      // const query = qs.stringify(abc);
       let priceJsons = await fetch(
         `/api/swap?buyToken=${selectBuyToken?.address}&sellToken=${selectSellToken?.address
         }&sellAmount=${parseUnits(
           sellTokenAmount,
           selectSellToken?.decimals
-        )}&takerAddress=${walletClient?.account?.address}&networkID=${networkNumber}`
+        )}&takerAddress=${walletClient?.account?.address}&networkID=${chain?.id}`
       );
-      // let abc = {
-      //   buyToken: selectBuyToken?.address,
-      //   sellToken: selectSellToken?.address,
-      //   sellAmount: parseUnits(sellTokenAmount, selectSellToken?.decimals),
-      //   takerAddress: walletClient?.account?.address,
-      // };
-      // const query = qs.stringify(abc);
-      // let priceJsons = await fetch(`/api/swap?${query}`);
+
       let priceData = await priceJsons.json();
-      //console.log("Swap ", query);
       //console.log("Price data ", priceData);
       if (priceData?.code == 109 || priceData?.code == 111) {
         setSwapBtnMessage(`Not Enough ${selectSellToken?.symbol}`);
@@ -411,7 +393,7 @@ function TradeBox({ initialData }) {
               priceData?.sellAmount
             ));
 
-          //console.log("what ",!allowenceFlag);
+
 
           if (!allowenceFlag) {
             /////***************ERC20 Allow */
@@ -433,7 +415,7 @@ function TradeBox({ initialData }) {
             selectBuyToken?.decimals
           );
 
-          setBuyTokenAmount(formatPrice);
+          //setBuyTokenAmount(formatPrice);
           return priceData;
         }
       }
@@ -452,40 +434,44 @@ function TradeBox({ initialData }) {
 
     if (sellTokenAmount == null) return;
 
-    const data = await publicClient?.readContract({
-      address: selectSellToken?.address,
-      abi: erc20ABI,
-      functionName: "balanceOf",
-      args: [walletClient?.account.address],
-    });
-    let walletTokenBalance = formatUnits(data, selectSellToken?.decimals);
+    let data;
+    try {
 
-    // console.log(walletTokenBalance, ">= ", sellTokenAmount);
-    // console.log("flag ", walletTokenBalance >= sellTokenAmount);
+      walletClient?.account?.address && (data = await publicClient?.readContract({
+        address: selectSellToken?.address,
+        abi: erc20ABI,
+        functionName: "balanceOf",
+        args: [walletClient?.account?.address],
+      }))
+      let walletTokenBalance = formatUnits(data, selectSellToken?.decimals);
+      if (walletTokenBalance - sellTokenAmount >= 0) {
+        setDisableSwapBtn(true);
+      } else {
+        setSwapBtnMessage(`Not Enough ${selectSellToken?.symbol}`);
+        setDisableSwapBtn(false);
+      }
+    } catch (e) {
 
-    if (walletTokenBalance - sellTokenAmount >= 0) {
-      setDisableSwapBtn(true);
-    } else {
-      setSwapBtnMessage(`Not Enough ${selectSellToken?.symbol}`);
-      setDisableSwapBtn(false);
     }
+
 
     //return formatUnits(data, tokenData?.[selectSellToken].decimals);
   }
 
   async function testAllowence(proxyAddress, allowenceAmount) {
-    if (proxyAddress === "0x0000000000000000000000000000000000000000")
-      return true;
-    //console.log("prox ", proxyAddress);
-    const data = await publicClient?.readContract({
-      address: selectSellToken?.address,
-      abi: erc20ABI,
-      functionName: "allowance",
-      args: [walletClient?.account.address, proxyAddress],
-    });
-    //console.log("allow ", formatUnits(data, tokenData?.[selectSellToken].decimals), "and ", allowenceAmount);
+    if (proxyAddress == "0x0000000000000000000000000000000000000000") return true;
+    let data;
+    try {
 
-    //console.log(data >= allowenceAmount);
+      walletClient?.account?.address && (data = await publicClient?.readContract({
+        address: selectSellToken?.address,
+        abi: erc20ABI,
+        functionName: "allowance",
+        args: [walletClient?.account?.address, proxyAddress],
+      }))
+    } catch (e) {
+
+    }
     return data >= allowenceAmount;
   }
 
@@ -531,15 +517,29 @@ function TradeBox({ initialData }) {
   async function tradeNow() {
     try {
       let priceData = await getSwap();
-      const txParams = {
-        from: priceData?.from,
+
+      let ad = await privateClient?.getAddresses();
+
+
+      let txParams = {
+        from: ad[0],
         to: priceData?.to,
         data: priceData?.data,
         value: priceData?.value,
         gasPrice: priceData?.gasPrice,
       };
 
-      let hashKey = await privateClient?.sendTransaction(txParams);
+
+      let hashKey;
+      priceData && (hashKey = await privateClient?.sendTransaction(
+        {
+          from: priceData?.from,
+          to: priceData?.to,
+          data: priceData?.data,
+          value: priceData?.value,
+          gasPrice: priceData?.gasPrice,
+        }
+      ))
 
       const id = toast.loading("Please wait...");
 
@@ -601,7 +601,16 @@ function TradeBox({ initialData }) {
                 <p>{`${selectSellToken?.symbol}`}</p> */}
 
 
-                {(selectSellToken != null) ? <> <img src={selectSellToken?.logoURI} />
+                {(selectSellToken != null) ? <>
+                  {
+                    (selectSellToken?.logoURI) ? <img src={selectSellToken?.logoURI} /> : <Skeleton className="flex rounded-full w-8 h-8" isLoaded={false} style={{
+                      height: "2rem",
+                      width: "2rem",
+                      marginRight: "0.5rem"
+                    }} />
+                  }
+
+
                   <p>
 
                     {selectSellToken?.symbol}
@@ -662,9 +671,15 @@ function TradeBox({ initialData }) {
                 setToggleToken(true);
               }}
             >
-              <img src={selectBuyToken?.logoURI} />
-              <p>
 
+              {
+                (selectBuyToken?.logoURI) ? <img src={selectBuyToken?.logoURI} /> : <Skeleton className="flex rounded-full w-8 h-8" isLoaded={false} style={{
+                  height: "2rem",
+                  width: "2rem",
+                  marginRight: "0.5rem"
+                }} />
+              }
+              <p>
                 {selectBuyToken?.symbol}
               </p>
 
@@ -716,7 +731,7 @@ function TradeBox({ initialData }) {
           </>
         ) : (
 
-        
+
           <>
             <button
               className={
@@ -726,7 +741,7 @@ function TradeBox({ initialData }) {
               }
               role="button"
               disabled={(selectNetwork != chain?.id) ? false : !disableSwapBtn}
-              onClick={(selectNetwork != chain?.id) ? async() => {await privateClient?.switchChain({ id: selectNetwork }) } : () =>
+              onClick={(selectNetwork != chain?.id) ? async () => { await privateClient?.switchChain({ id: selectNetwork }) } : () =>
                 approveTougle
                   ? approveFunction(
                     ZERO_EX_PROXY,

@@ -5,6 +5,8 @@ export async function getdata(network, token) {
         if(network == "polygon") {
             networkID=137;
         } 
+
+        //console.log("get Dataa**************** ",`https://api.defipe.io/searchbychainId/${networkID}/${token}`)
         let tokenAPI = await fetch(`https://api.defipe.io/searchbychainId/${networkID}/${token}`);
         let tokenJSON = await tokenAPI?.json();
         return (tokenJSON)? tokenJSON:null;

@@ -3,16 +3,17 @@
 }
 
 .tradeBoxContainer {
-    width: 24rem;
+    /* width: 24rem; */
+    width: 30%;
 }
 
 .dexContent {
     display: flex;
     align-items: self-start;
     justify-content: center;
-    width: 100%;
+    width: 90%;
     height: 100%;
-    margin-top: 1rem;
+    margin: 1rem auto;
 }
 
 .spaceDiv {
@@ -25,8 +26,14 @@
     margin: 0.7rem 1.5rem 1rem 0rem;
 }
 
+@media only screen and (max-width: 1450px ) {
+    .tradeBoxContainer {
+        width: 24rem;
+    }
+}
 
-@media (max-width: 1000px) {
+
+@media only screen and (max-width: 1000px) {
     .dexLayout {
         padding-top: 0.9rem;
         padding-left: 0px;

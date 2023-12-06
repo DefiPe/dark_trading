@@ -10,14 +10,37 @@
 
 .tradingviewContainer {
     height: 27rem;
-    width: 60%;
+    width: 70%;
     margin-right: 1rem;
     padding: 0.1rem;
     background-color: var(--gray);
     border-radius: 10px;
 }
 
+@media (max-width: 1200px) {
+    .tradingviewContainer {
+        height: 27rem;
+        width: 60%;
+        margin-right: 1rem;
+        padding: 0.1rem;
+        background-color: var(--gray);
+        border-radius: 10px;
+    }
+}
+
 @media (max-width: 1000px) {
+    .tradingviewContainer {
+        height: -webkit-fill-available;
+        width: 90%;
+        height: 35rem;
+        margin: 0.6rem auto;
+        padding: 0.2rem;
+        background-color: var(--gray);
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 700px) {
     .tradingviewContainer {
         height: -webkit-fill-available;
         width: 95%;

@@ -4,8 +4,8 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
-import Cross from "@/components/Cross";
-import { HambergerMenu } from "iconsax-react";
+//import Cross from "@/components/Cross";
+//import { HambergerMenu } from "iconsax-react";
 // import { fuseSparknet } from "viem/chains";
 import Image from "next/image";
 const TopNavbar = () => {
@@ -18,7 +18,7 @@ const TopNavbar = () => {
   const { openConnectModal } = useConnectModal();
   const { isConnected } = useAccount();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [toggleMenu,setToggleMenu]=useState(false)
+  const [toggleMenu, setToggleMenu] = useState(false)
 
   const menuItems = [
     "Trade",
@@ -79,25 +79,7 @@ const TopNavbar = () => {
 
           </div>
 
-          {/* <div className={styles.topNavMobile}>
-            <Link href="/">
 
-              <Image
-                src="/white-logo.svg"
-                alt="defipe_logo"
-                className={styles.logoIcon}
-              />
-
-            </Link>
-
-            <Image
-              src="/hamburger_menu.svg"
-              alt="defipe_logo"
-              className={styles.hambergerMenu}
-            // width={100}
-            // height={100}
-            />
-          </div> */}
 
 
           {/* <Navbar onMenuOpenChange={setIsMenuOpen} className={styles.topNavMobile}>
@@ -203,73 +185,78 @@ const TopNavbar = () => {
             </NavbarMenu>
 
           </Navbar> */}
-          <div className={styles.ham}>
-          <div className={styles.topNavMobile}>
-          <Link href="/">
-
-            <Image 
-              src="/white-logo.svg"
-              alt="defipe_logo"
-              height={100}
-              width={100}
-              className={styles.logoIcon}
+          {/* <div className={styles.ham}> */}
+          <header className={styles.topNavMobile}>
+            <Link href="/">
+              <Image
+                src="/white-logo.svg"
+                alt="defipe_logo"
+                height={100}
+                width={100}
+                className={styles.logoIcon}
               />
+            </Link>
 
-          </Link>
-          <div>
             <button className={styles.menuHamburger} onClick={() => (setToggleMenu(true))}>
-            <Image 
-            src="/hamurger.svg"
-            height={100}
-            width={100}
-            />
+              <Image
+                src="/hamurger.svg"
+                height={100}
+                width={100}
+              />
             </button>
 
-            
-            
-          </div>
-          </div>
-          
-          </div>
-          <div className={styles.menuItemDiv} style={toggleMenu?{width:'80vw',left:'0px'}:{width:'0px',left:'-50rem'}}>
+          </header>
+          {/* </div> */}
+          <div className={styles.menuItemDiv} style={toggleMenu ? { width: '80vw', left: '0px' } : { width: '0px', left: '-50rem' }}>
             <div className={styles.menuIconDiv}>
-            <Image
-              src="/lg.svg"
-              alt="defipe_logo"
-              className={styles.logoIcon}
-              height={100}
-              width={100}
+              <Image
+                src="/lg.svg"
+                alt="defipe_logo"
+                className={styles.logoIconFull}
+                height={100}
+                width={100}
               />
-              <button onClick={() => (setToggleMenu(false))}>
-              <Image src="/plus.svg" height={100}
-            width={100}
-              />
-            </button>
-
-
+              <button onClick={() => (setToggleMenu(false))} className={styles.menuIconCross}>
+                <Image src="/plus.svg" height={100}
+                  width={100}
+                />
+              </button>
             </div>
-            {/* <ul className={styles.menuItems}>
-            <li>Dashboard</li>
-            <li>Market</li>
-            <li>Trade</li>
-            <li>Settings</li>
-            </ul> */}
-           
             {
-              (toggleMenu)?<> <div className={styles.menuItems}>
-              <Link href="#"><Image src="/dashboard.svg" height={100} width={100} className={styles.menuIcon}/>Dashboard</Link>
-              <Link href="#"><Image src="/market.svg" height={100} width={100} className={styles.menuIcon}/>Market</Link>
-              <Link href="#"><Image src="/trade.svg" height={100} width={100} className={styles.menuIcon}/>Trade</Link>
-              <Link href="#"><Image src="/settings.svg" height={100} width={100} className={styles.menuIcon}/>Settings</Link>
-  
+              (toggleMenu) ? <> <div className={styles.menuItems}>
+                <Link href="#"><Image src="/dashboard.svg" height={100} width={100} className={styles.menuIcon} />Dashboard</Link>
+                <Link href="#"><Image src="/market.svg" height={100} width={100} className={styles.menuIcon} />Market</Link>
+                <Link href="#"><Image src="/trade.svg" height={100} width={100} className={styles.menuIcon} />Trade</Link>
+                <Link href="#"><Image src="/settings.svg" height={100} width={100} className={styles.menuIcon} />Settings</Link>
+
               </div>
-              <button className={styles.connect}>
-              Connect Wallet
-            </button>
-              </>:<></>
+                {/* <button className={styles.connect}>
+                  Connect Wallet
+                </button> */}
+                {isConnected ? (
+                  <div style={{margin:"0px auto"}}>
+                    <ConnectButton accountStatus="address" chainStatus="icon" />
+                  </div>
+
+                ) : (
+                  <>
+                    {" "}
+                    {openConnectModal && (
+                      <button
+                        onClick={openConnectModal}
+                        type="button"
+                        className={styles.connect}
+                      >
+                        Connect Wallet
+                      </button>
+                    )}
+                  </>
+                )}
+
+              </> : <></>
             }
-           
-            </div>
+
+          </div>
 
         </> : <></>}
 
